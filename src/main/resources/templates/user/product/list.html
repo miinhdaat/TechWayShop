@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/layout/index :: dynamic(~{::main})}">
+
+<body>
+    <div class="page-wrapper">
+        <main class="main">
+            <div class="page-header text-center" style="background-image: url('/assets/images/backgrounds/bg-2.jpg')">
+                <div class="container">
+                    <h1 class="page-title" style="color: aliceblue;">ĐỒ GIA DỤNG<span>Shop</span></h1>
+                </div>
+            </div>
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home/index}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Cửa hàng</li>
+                    </ol>
+                </div>
+            </nav>
+            <div class="page-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="toolbox">
+                                <div class="toolbox-left">
+                                    <div class="toolbox-info">
+                                        Hiển thị <span>[[${sizepro} ]]</span> Sản phẩm
+                                    </div>
+                                </div>
+                                <div class="toolbox-right">
+                                    <div class="toolbox-sort">
+                                        <label class="control-label" for="input-sort" style="margin-right: 1rem">Sắp xếp
+                                            theo: </label>
+                                        <div class="">
+                                            <a th:href="@{/product/list/desc/1}">Giảm dần</a>
+                                            <a th:href="@{/product/list/asc/1}">Tăng dần</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="products mb-3">
+                                <div class="row justify-content-center">
+                                    <div class="col-6 col-md-4 col-lg-4" th:each="p:${items.pageList}">
+                                        <div class="product product-7 text-center">
+                                            <figure class="product-media">
+                                                <span class="product-label label-new"
+                                                    th:if="${p.lastest} == true">New</span>
+
+                                                <span class="product-label label-out" th:if="${p.quantity} == 0">Hết hàng</span>
+
+                                                <span class="sale-label label-sale" th:if="${p.distcount} > 0">
+                                                    <i class="bi bi-lightning"></i> Giảm [[${#numbers.formatDecimal(p.distcount, 1 , 'COMMA',0,'POINT')}]] %
+                                                </span>
+
+                                                <a th:href="@{|/product/detail/${p.product_id}|}">
+                                                    <img th:src="@{|/assets/images/products/${p.image1}|}" alt="Product image"
+                                                        class="product-image">
+                                                </a>
+                                                <div>
+                                                    <div class="product-action">
+                                                        <a th:attr="ng-click=@{|cart.add(${p.product_id})|}"
+                                                            class="btn-product btn-cart"><span>add to
+                                                                cart</span></a>
+                                                    </div>
+                                                </div>
+                                            </figure>
+                                            <div class="product-body">
+                                                <h3 class="product-title"><a
+                                                        th:href="@{|/product/detail/${p.product_id}|}"><span
+                                                            th:utext="${p.name}"></span></a></h3>
+                                                <div class="product-price">
+                                                    [[${#numbers.formatDecimal(p.unit_price, 3 , 'COMMA',0,'POINT')} ]]
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item"
+                                        th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link page-link-prev" th:href="@{/product/list}"
+                                            aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Trang
+                                            đầu
+                                        </a>
+                                    </li>
+                                    <li th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' "
+                                        class="page-item active" aria-current="page">
+                                        <a class="page-link" th:href="@{|${baseUrl}${currentIndex - 1}|}"
+                                            title='Lùi 1 trang'><span aria-hidden="true">«</span></a>
+                                    </li>
+                                    <li th:if="${currentIndex - 1} != 0" class="page-item" aria-current="page">
+                                        <a class="page-link" th:href="@{|${baseUrl}${currentIndex - 1}|}"><span
+                                                aria-hidden="true">[[${currentIndex}
+                                                -1]]</span></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link"
+                                            th:href="@{|${baseUrl}${currentIndex}|}"><span
+                                                aria-hidden="true">[[${currentIndex}]]</span></a></li>
+                                    <li th:if="${currentIndex +1} <= ${totalPageCount}" class="page-item"><a
+                                            class="page-link" th:href="@{|${baseUrl}${currentIndex + 1}|}"><span
+                                                aria-hidden="true">[[${currentIndex}
+                                                +1]]</span></a></li>
+                                    <li th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'"
+                                        class="page-item active" aria-current="page">
+                                        <a class="page-link" th:href="@{|${baseUrl}${currentIndex + 1}|}"
+                                            title='Tiến 1 trang'><span aria-hidden="true">»</span></a>
+                                    </li>
+                                    <li class="page-item"
+                                        th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+                                        <a class="page-link page-link-next" th:href="@{|${baseUrl}${totalPageCount}|}"
+                                            aria-label="Next">
+                                            Trang cuối <span aria-hidden="true"><i
+                                                    class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <aside class="col-lg-3 order-lg-first">
+                            <div th:replace="user/layout/_category.html"></div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+
+            <script src="/assets/js/wNumb.js"></script>
+            <script src="/assets/js/nouislider.min.js"></script>
+        </main>
+    </div>
+</body>
+
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/layout/index :: dynamic(~{::main})}">
+
+<body>
+    <div class="page-wrapper">
+
+        <main class="main" th:object="${order}">
+            <div class="page-header text-center" style="background-image: url('/assets/images/backgrounds/bg-2.jpg')">
+                <div class="container">
+                    <h1 class="page-title" style="color: aliceblue;">Chi tiết đơn hàng<span>Shop</span></h1>
+                </div>
+            </div>
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home/index}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/product/list}">Cửa hàng</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Chi tiết đơn hàng</li>
+                    </ol>
+                </div>
+            </nav>
+
+            <div class="page-content">
+                <div class="container">
+                    <form action="/send" method="post">
+                        <h2 class="checkout-title">Thông tin đơn hàng</h2>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <div class="">Mã đơn hàng</div>
+                                    <input th:value="*{Order_id}" class="form-control" readonly name="subject">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <div class="">Người mua</div>
+                                    <input th:value="*{account.Username}" class="form-control" name="content" readonly>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <div class="">Email</div>
+                                    <input th:value="*{account.Email}" class="form-control" name="to" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <div class="">Ngày mua</div>
+                                    <input th:value="*{#dates.format(CreateDate, 'yyyy-MM-dd HH:mm')}"
+                                        class="form-control" readonly>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <div class="">Số điện thoại</div>
+                                    <input th:value="*{Phone}" class="form-control" readonly name="phone">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <div class="">Tổng tiền</div>
+                                    <input th:value="*{#numbers.formatDecimal(price, 3 , 'COMMA',0,'POINT') + ' Đ'}"
+                                        class="form-control" readonly name="price">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <div class="">Phương thức thanh toán</div>
+                                    <input th:value="*{method}" class="form-control" readonly name="method">
+                                </div>
+                                <div hidden="true" class="form-group">
+                                    <div class="">Intent</div>
+                                    <input th:value="*{intent}" class="form-control" readonly name="intent">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <div class="">Trạng thái</div>
+                                    <div th:if="*{Status}==0" class="form-control" style="font: bold;color: blue;" name="status">
+                                        Đang
+                                        xử lý</div>
+                                    <div th:if="*{Status}==1" class="form-control" style="font: bold; color: rgb(0, 156, 173);">Đang giao hàng</div>
+                                    <div th:if="*{Status}==3" class="form-control" style="font: bold; color: rgb(49, 163, 0);">Đã hoàn thành</div>
+                                    <div th:if="*{Status}==2" class="form-control" style="font: bold;color: rgb(255, 106, 0);">Hủy giao hàng
+                                    </div>
+                                    <div th:if="*{Status}==4" class="form-control" style="font: bold;color: red;">Đã hủy</div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <div class="">Địa chỉ nhận hàng</div>
+                                    <textarea th:field="*{Address}" class="form-control" readonly></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="container">
+                <h2 class="checkout-title">Chi tiết đơn hàng</h2>
+                <div class="card card-body">
+                    <table class="table table-cart table-mobile">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th class="text-center">Khuyến mãi</th>
+                                <th class="text-center">Giá</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-center">Tổng giá</th>
+                                <th class="text-center" th:if="${order.Status}==3">Đánh giá</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="detail : *{orderDetails}" th:object="${detail}">
+                                <td class="product-col">
+                                    <div class="product">
+                                        <figure class="product-media">
+                                            <a th:href="@{|/product/detail/${detail.product.Product_id}|}">
+                                                <img th:src="@{|/assets/images/products/${detail.product.Image1}|}"
+                                                    alt="Product image">
+                                            </a>
+                                        </figure>
+                                        <h3 class="product-title">
+                                            <a
+                                                th:href="@{|/product/detail/${detail.product.Product_id}|}">[[*{product.Name}]]</a>
+                                        </h3>
+                                    </div>
+                                </td>
+                                <td class="price-col text-center">[[*{product.Distcount}]]%</td>
+                                <td class="price-col text-center">[[*{#numbers.formatDecimal(Price , 0 ,
+                                    'COMMA',0,'POINT')}]] Đ</td>
+                                <td class="quantity-col text-center">[[*{Quantity}]]</td>
+                                <td class="total-col text-center">[[*{#numbers.formatDecimal(Price * Quantity-(Price *
+                                    Quantity *product.Distcount/100) , 0 , 'COMMA',0,'POINT')}]] Đ</td>
+                                <td class="text-center" th:if="${order.Status}==3">
+                                    <div class="btn btn-outline-warning"
+                                        th:attr="ng-click=@{|cart.getinfoproducts(${detail.product.Product_id})|}"
+                                        data-toggle="modal" data-target="#myModal">Đánh giá
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <form th:action="@{/vote/add}" method="post" enctype="multipart/form-data">>
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"><i class="icon-close"></i></span>
+                                        </button>
+
+                                        <div class="form-box">
+                                            <h4 class="text-center">Đánh giá sản phẩm</h4>
+                                            <div class="row" style="border-bottom: .1rem solid #ebebeb; border-top: .1rem solid #ebebeb; margin-bottom: 3rem; margin-top: 1rem;">
+                                                <div class="col-sm-4 d-flex align-items-center">
+                                                    <div class="">
+                                                        <a class="thumbnails">
+                                                            <img style="border-radius: 6px;"
+                                                                ng-src="/assets/images/products/{{cart.getitem.image1}}">
+                                                        </a>
+                                                        <input name="product_id" value="{{cart.getitem.product_id}}"
+                                                            hidden="true">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 ">
+                                                    <div class="row">
+                                                        <div class="col-12 mx-auto">
+                                                            <p style=" font-weight: 600; font-size: 18px; text-align: center;">Tên sản phẩm :
+                                                                {{cart.getitem.name}}</p>
+                                                            </div>
+                                                        <div class="col-12 mx-auto">
+                                                            <p style="text-align: center;">Thương hiệu : {{cart.getitem.trademark.name}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row text-center mx-auto">
+                                                        <div class="col-12 mx-auto">
+                                                            <p ng-if="start==1">Rất tệ</p>
+                                                            <p ng-if="start==2">Chưa Tốt</p>
+                                                            <p ng-if="start==3">Bình thường</p>
+                                                            <p ng-if="start==4">Tốt</p>
+                                                            <p ng-if="start==5">Tuyệt vời</p>
+                                                        </div>
+                                                        <div class="col-12" id="full-stars-example-two">
+                                                            <div class="rating-group">
+                                                                <input disabled checked ng-model="start" name="vote"
+                                                                    class="rating__input rating__input--none"
+                                                                    id="rating3-none" value="0" type="radio">
+                                                                <label aria-label="1 star" class="rating__label"
+                                                                    for="rating3-1"><i
+                                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                                                <input class="rating__input" ng-model="start"
+                                                                    name="vote" id="rating3-1" value="1"
+                                                                    type="radio">
+                                                                <label aria-label="2 stars" class="rating__label"
+                                                                    for="rating3-2"><i
+                                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                                                <input class="rating__input" ng-model="start"
+                                                                    name="vote" id="rating3-2" value="2"
+                                                                    type="radio">
+                                                                <label aria-label="3 stars" class="rating__label"
+                                                                    for="rating3-3"><i
+                                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                                                <input class="rating__input" ng-model="start"
+                                                                    name="vote" id="rating3-3" value="3"
+                                                                    type="radio">
+                                                                <label aria-label="4 stars" class="rating__label"
+                                                                    for="rating3-4"><i
+                                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                                                <input class="rating__input" ng-model="start"
+                                                                    name="vote" id="rating3-4" value="4"
+                                                                    type="radio">
+                                                                <label aria-label="5 stars" class="rating__label"
+                                                                    for="rating3-5"><i
+                                                                        class="rating__icon rating__icon--star fa fa-star"></i></label>
+                                                                <input class="rating__input" ng-model="start"
+                                                                    name="vote" id="rating3-5" value="5"
+                                                                    type="radio">
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <textarea name="content"
+                                                            placeholder="Hãy chia sẻ đánh giá của bạn về sản phẩm này nhé"
+                                                            style="font-size: 13px;"
+                                                            class="form-group col-sm-12 form-control"
+                                                            rows="4"></textarea>
+                                                        <div class="text-center">
+                                                            <input type="file" name="image_comment"
+                                                                class="form-control col-sm-12">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-footer">
+                                                <button type="submit" class="btn btn-outline-primary-2 mx-auto">
+                                                    <span>Đánh giá</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>

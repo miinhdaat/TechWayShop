@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/layout/index :: dynamic(~{::main})}">
+
+<body>
+    <main th:object="${item}">
+        <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+            <div class="container d-flex align-items-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/home/index}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/product/list}">Cửa hàng</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Chi tiết sản phẩm</li>
+                </ol>
+            </div>
+        </nav>
+
+        <div class="page-content">
+            <div class="container">
+                <div class="product-details-top">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="product-gallery product-gallery-vertical">
+                                <div class="row">
+                                    <figure class="product-main-image">
+                                        <img id="product-zoom" th:src="@{|/assets/images/products/*{image1}|}"
+                                            alt="product image">
+                                        <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                            <i class="icon-arrows"></i>
+                                        </a>
+                                    </figure>
+
+                                    <div id="product-zoom-gallery" class="product-image-gallery">
+                                        <a class="product-gallery-item active" href="#"
+                                            th:data-image="@{|/assets/images/products/*{image1}|}">
+                                            <img th:src="@{|/assets/images/products/*{image1}|}" alt="product side">
+                                        </a>
+
+                                        <a class="product-gallery-item" href="#"
+                                            th:data-image="@{|/assets/images/products/*{image2}|}">
+                                            <img th:src="@{|/assets/images/products/*{image2}|}" alt="product side">
+                                        </a>
+
+                                        <a class="product-gallery-item" href="#"
+                                            th:data-image="@{|/assets/images/products/*{image3}|}">
+                                            <img th:src="@{|/assets/images/products/*{image3}|}" alt="product side">
+                                        </a>
+
+                                        <a class="product-gallery-item" href="#"
+                                            th:data-image="@{|/assets/images/products/*{image4}|}">
+                                            <img th:src="@{|/assets/images/products/*{image4}|}" alt="product side">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="product-details">
+                                <h1 class="product-title"><a href="#" th:text="*{name}"></a></h1>
+                                <div class="ratings-container">
+                                    <div th:replace="user/vote/_proRating.html"></div>
+                                </div>
+                                <div class="product-price">
+                                    <span class="price1"><a
+                                            th:text="*{#numbers.formatDecimal(unit_price, 3 , 'COMMA',0,'POINT') +' Đ'}"></a></span>
+                                </div>
+                                <div class="product-content">
+                                    <p>Khuyến mãi: <span class="label label-danger" th:if="*{Distcount} ==0"></span>
+                                        <span th:if="*{quantity} !=0"><a><span th:text="*{Distcount}"></span>%</a></span>
+                                    </p>
+                                </div>
+                                <div class="product-content">
+                                    <p>Tình trạng: <span class="label label-danger" th:if="*{quantity} ==0">Hết
+                                            hàng</span>
+                                        <span th:if="*{quantity} !=0"><a>Còn hàng</a></span>
+                                    </p>
+                                </div>
+                                <div class="details-filter-row details-row-size">
+                                    <label for="qty">Qty:</label>
+                                    <div class="product-details-quantity">
+                                        <input type="number" id="qtyy" class="form-control" value="1" min="1" max="10"
+                                            step="1">
+                                    </div>
+                                </div>
+
+                                <div class="product-details-action">
+                                    <span th:if="*{quantity} ==0"><button
+                                            class="btn btn-block btn-outline-danger disabled">Hết
+                                            hàng</button></span>
+                                    <span th:if="*{quantity} !=0"><a href="#"
+                                            th:attr="ng-click=@{|cart.add1(${item.product_id})|}"
+                                            class="btn-product btn-cart">
+                                            <span style="color: inherit; font-size: 1.4rem;text-transform: uppercase; box-shadow: none; transition: box-shadow .35s ease, color 0s ease">Thêm sản phẩm</span></a>
+                                    </span>
+                                </div>
+
+                                <div class="product-details-footer">
+                                    <div class="row justify-content-center mx-auto">
+                                        <div class="details-action-wrapper">
+                                            <div id="username" hidden="true">[[${#request.remoteUser}]]</div>
+                                            <a href="#" th:attr="ng-click=@{|addFavo(${item.product_id})|}"
+                                                class="btn-product btn-wishlist" title="Wishlist"><span>Thêm vào yêu thích</span></a>
+                                        </div>
+                                        <div class="details-action-wrapper" style="margin-left: 4rem;">
+                                            <a href="#" data-toggle="modal" data-target="#myModal" class="btn-product" title="Share"><i class="bi bi-share mr-3"></i><span>Chia sẽ</span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-details-tab">
+                    <ul class="nav nav-pills justify-content-center" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
+                                role="tab" aria-controls="product-desc-tab" aria-selected="true">Miêu tả</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="comment-link" data-toggle="tab" href="#comment"
+                                th:attr="ng-click=@{|cart.getinfComment(${item.product_id})|}" role="tab"
+                                aria-controls="comment" aria-selected="false">Bình luận ([[${cmtsize}]])</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"
+                                role="tab" aria-controls="product-review-tab" aria-selected="false">Đánh giá
+                                ([[${votesize}]])</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel"
+                            aria-labelledby="product-desc-link">
+                            <div class="product-desc-content">
+                                <div th:utext="*{detail}" class="ckeditor"></div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="comment-link">
+                            <div th:replace="user/comment/_proComment.html"></div>
+                        </div>
+
+                        <div class="tab-pane fade" id="product-review-tab" role="tabpanel"
+                            aria-labelledby="product-review-link">
+                            <div th:replace="user/vote/_proVote.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="title text-center mb-4">SẢN PHẨM CÙNG LOẠI</h2>
+                <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                    data-owl-options='{
+                                    "nav": false, 
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": false,
+                                    "responsive": {
+                                        "0": {
+                                            "items":1
+                                        },
+                                        "480": {
+                                            "items":2
+                                        },
+                                        "768": {
+                                            "items":3
+                                        },
+                                        "992": {
+                                            "items":4
+                                        },
+                                        "1200": {
+                                            "items":4,
+                                            "nav": true,
+                                            "dots": false
+                                        }
+                                    }
+                                }'>
+                    <div class="product product-7 text-center" th:each="p:*{category.products}">
+                        <figure class="product-media">
+                            <a th:href="@{|/product/detail/${p.product_id}|}">
+                                <img th:src="@{|/assets/images/products/${p.image1}|}" alt="Product image" class="product-image">
+                            </a>
+
+                            <div class="product-action-vertical">
+                                <a href="#" th:attr="ng-click=@{|addFavo(${p.product_id})|}"
+                                    class="btn-product-icon btn-wishlist btn-expandable"><span>Thêm vào yêu
+                                        thích</span></a>
+
+                            </div>
+
+                            <div class="product-action">
+                                <a href="#" th:attr="ng-click=@{|cart.add(${p.product_id})|}"
+                                    class="btn-product btn-cart"><span>Thêm vào giỏ hàng</span></a>
+                            </div>
+                        </figure>
+                        <div class="product-body">
+                            <div class="product-cat">
+                                <a href="#"> </a>
+                            </div>
+                            <h3 class="product-title"><a th:href="@{|/product/detail/${p.product_id}|}"><span
+                                        th:text="${p.name}"></span></a></h3>
+
+                            <div class="product-price">
+                                [[${#numbers.formatDecimal(p.unit_price, 3, 'COMMA',0,'POINT')}]] Đ
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sticky-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <figure class="product-media">
+                            <a href="#">
+                                <img th:src="@{|/assets/images/products/*{image1}|}" alt="Product image">
+                            </a>
+                        </figure>
+
+                        <h4 class="product-title"><a href="#"><span th:text="*{name}"></span></a></h4>
+
+                    </div>
+
+                    <div class="col-6 justify-content-end">
+                        <div class="product-price">
+                            <span th:text="*{#numbers.formatDecimal(unit_price, 3 , 'COMMA',0,'POINT') +' Đ'}"></span>
+                        </div>
+
+                        <div class="product-details-quantity">
+                            <input type="number" id="sticky-cart-qty" class="form-control" value="1" min="1" step="1"
+                                data-decimals="0" required>
+                        </div>
+
+                        <div class="product-details-action">
+                            <span th:if="*{quantity} ==0"><button class="btn btn-block btn-outline-danger disabled">Hết
+                                    hàng</button></span>
+                            <span th:if="*{quantity} !=0"><a href="#"
+                                    th:attr="ng-click=@{|cart.add2(${item.product_id})|}" class="btn-product btn-cart">
+                                    <span
+                                        style="color: inherit; font-size: 1.4rem;text-transform: uppercase; box-shadow: none; transition: box-shadow .35s ease, color 0s ease">Thêm
+                                        sản phẩm</span></a></span>
+                            <a href="#" th:attr="ng-click=@{|addFavo(${item.product_id})|}"
+                                class="btn-product btn-wishlist" title="Wishlist"><span>Thêm vào
+                                    yêu thích</span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content p-5">
+                    <div class="modal-body">
+                        <h4 class="text-center">Chia sẽ</h4>    
+                        <form action="/send1" method="post">
+                            <div class="form-group">
+                                <label>Đến:</label> <input type="text" class="form-control" name="to"
+                                    placeholder="Nhập email">
+                            </div>
+                            <div class="form-group">
+                                <label>Chủ đề:</label> <input type="text" class="form-control" name="subject"
+                                    placeholder="Nhập chủ đề">
+                            </div>
+                            <div class="form-group">
+                                <label for="content">Nội dung:</label>
+                                <textarea class="form-control" rows="3" name="content"></textarea>
+                            </div>
+                            <div class="form-group" hidden="true">
+                                <label for="content">Id:</label> <input class="form-control" rows="3" name="id"
+                                    th:value="*{product_id}" readonly></input>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-outline-primary-2">Gửi</button>
+                                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</body>
+
+</html>

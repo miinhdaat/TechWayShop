@@ -1,0 +1,71 @@
+<div class="sidebar sidebar-shop">
+    <form th:action="@{/product/list/find/1}">
+        <div class="widget widget-clean">
+            <label>Bộ lọc:</label>
+        </div>
+        <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+                <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
+                    Phân loại
+                </a>
+            </h3>
+            <div class="collapse show" id="widget-1">
+                <div class="widget-body">
+                    <div class="form-group form-group-search">
+                        <div class="row">
+                            <div class="col-sm-6 name">Loại sản phẩm</div>
+                            <div class="col-sm-6">
+                                <select name="Category_id" data-live-search="true" class="form-control text-center">
+                                    <option hidden="true" value="">Tất cả</option>
+                                    <div class="form-group selectpicker show-tick" th:each="c,state:${cates}">
+                                        <option th:value="${c.Category_id}">[[${c.name}]]</option>
+                                    </div>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-search">
+                        <div class="row">
+                            <div class="col-sm-6 name">Thương hiệu</div>
+                            <div class="col-sm-6">
+                                <select name="Trademark_id" data-live-search="true" class="form-control text-center">
+                                    <option hidden="true" value="">Tất cả</option>
+                                    <div class="form-group selectpicker show-tick" th:each="t,state:${trads}">
+                                        <option th:value="${t.Trademark_id}">[[${t.Name}]]</option>
+                                    </div>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+                <a data-toggle="collapse" href="#widget-5" role="button" aria-expanded="true" aria-controls="widget-5">
+                    Giá
+                </a>
+            </h3>
+
+            <div class="collapse show" id="widget-5">
+                <div class="widget-body">
+                    <div class="filter-price">
+                        <div class="filter-price-text">
+                            Giá: 
+                            <input type="hidden" th:value="MinPrice" id="amount2" name="MinPrice" readonly >
+                            <input type="hidden" th:value="MaxPrice" id="amount3" name="MaxPrice" readonly>
+                            <span id="amount1"></span>
+                        </div>
+                        <div id="price-slider"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group form-group-search text-center">
+            <button class="btn btn-round btn-outline-secondary" style="margin-top: 10px;" type="submit">Tìm
+                kiếm</button>
+        </div>
+    </form>
+</div>

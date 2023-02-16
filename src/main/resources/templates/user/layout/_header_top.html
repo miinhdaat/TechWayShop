@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="header-left">
+        <a href="tel:0123456789"><i class="icon-phone"></i>Gọi: +0123 456 789</a>
+    </div>
+
+    <div class="header-right">
+        <div id="isusername" hidden="true">[[${#request.remoteUser}]]</div>
+        <ul class="top-menu">
+            <li>
+                <a href="#">Links</a>
+                <ul>
+                    <li>
+                        <div class="header-dropdown">
+                            <a href="#">Vietnamese</a>
+                            <div class="header-menu">
+                                <ul>
+                                    <li><a href="#">Vietnamese</a></li>
+                                    <li><a href="#">English</a></li>
+                                    <li><a href="#">French</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <th:block th:if="${#request.remoteUser}">
+                        <li>
+                            <div class="header-dropdown">
+                                <a href="#">Xin chào: [[${#request.remoteUser}]]</a>
+                                <div class="header-menu">
+                                    <ul>
+                                        <li><a th:href="@{|/home/info?username=${#request.remoteUser}|}">TĂ i khoáº£n cá»§a tĂ´i</a></li>
+                                        <li><a th:href="@{|/favolist/user|}">Sản phẩm yêu thích</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}">
+                            <a th:href="@{/admin/home/index}">Quản trị</a>
+                        </li>
+
+                        <li><a th:href="@{/security/logoff}">Đăng xuất</a></li>
+                    </th:block>
+
+                    <th:block th:unless="${#request.remoteUser}">
+                        <li><a th:href="@{/security/login/form}">Đăng nhập/Đăng ký</a></li>
+                    </th:block>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(main)" lang="zxx" class="js">
+
+<head>
+    <base href="../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+        content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="/assets/images/icons/HASicon.ico">
+    <!-- Page Title  -->
+    <title>Home Appliances Store | Admin</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="/admin/assets/css/dashlite.css?ver=2.2.0">
+    <link id="skin-default" rel="stylesheet" href="/admin/assets/css/theme.css?ver=2.2.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+
+<body ng-app="admin-ctrl" class="nk-body bg-lighter npc-general has-sidebar">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- sidebar @s -->
+            <div th:replace="/admin/layout/_aside.html"></div>
+            <!-- sidebar @e -->
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <!-- main header @s -->
+                <div class="nk-header nk-header-fixed is-light">
+                    <div class="container-fluid">
+                        <div th:replace="/admin/layout/_header.html"></div>
+                    </div><!-- .container-fliud -->
+                </div>
+                <!-- main header @e -->
+
+                <!-- content @s -->
+                <div class="nk-content" id="main-content" ng-controller="ad-ctrl">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between">
+                                        <div class="nk-block-head-content">
+                                            <h4 class="nk-block-title page-title">XIN CHÀO BẠN</h4>
+                                        </div><!-- .nk-block-head-content -->
+
+                                        <button data-toggle="modal" data-target="#modal_confirm"
+                                            class="btn btn-outline-secondary" style="float: right;"><em class="icon ni ni-trash-alt mr-2"></em> Xoá ảnh rác</button>
+                                    </div><!-- .nk-block-between -->
+                                </div><!-- .nk-block-head -->
+                                <div class="nk-block">
+                                    <div class="row g-gs">
+
+                                        <div class="col-xxl-3 col-md-6">
+                                            <div class="card h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group mb-2">
+                                                        <div class="card-title">
+                                                            <h6 class="title">TỔNG SẢN PHẨM TỒN KHO</h6>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="nk-store-statistics">
+                                                        <li class="item">
+                                                            <div class="info">
+                                                                <div class="title">Số mặt hàng</div>
+                                                                <div class="count">[[${prosize}]]</div>
+                                                            </div>
+                                                            <em class="icon bg-pink-dim ni ni-box"></em>
+                                                        </li>
+                                                    </ul>
+                                                </div><!-- .card-inner -->
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+
+                                        <div class="col-xxl-3 col-md-6">
+                                            <div class="card h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group mb-2">
+                                                        <div class="card-title">
+                                                            <h6 class="title">TỔNG SỐ ĐƠN HÀNG</h6>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="nk-store-statistics">
+                                                        <li class="item">
+                                                            <div class="info">
+                                                                <div class="title">Số đơn hàng</div>
+                                                                <div class="count">[[${ordersize}]]</div>
+                                                            </div>
+                                                            <em class="icon bg-primary-dim ni ni-bag"></em>
+                                                        </li>
+                                                    </ul>
+                                                </div><!-- .card-inner -->
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+
+                                        <div class="col-xxl-3 col-md-6">
+                                            <div class="card h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group mb-2">
+                                                        <div class="card-title">
+                                                            <h6 class="title">TỔNG SỐ KHÁCH HÀNG</h6>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="nk-store-statistics">
+                                                        <li class="item">
+                                                            <div class="info">
+                                                                <div class="title">Số khách hàng</div>
+                                                                <div class="count">[[${accsize}]]</div>
+                                                            </div>
+                                                            <em class="icon bg-info-dim ni ni-users"></em>
+                                                        </li>
+                                                    </ul>
+                                                </div><!-- .card-inner -->
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                        <div class="col-xxl-3 col-md-6">
+                                            <div class="card h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group mb-2">
+                                                        <div class="card-title">
+                                                            <h6 class="title">TỔNG SỐ BÀI VIẾT</h6>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="nk-store-statistics">
+                                                        <li class="item">
+                                                            <div class="info">
+                                                                <div class="title">Số bài viết</div>
+                                                                <div class="count">[[${postsize}]]</div>
+                                                            </div>
+                                                            <em class="icon bg-purple-dim ni ni-server"></em>
+                                                        </li>
+                                                    </ul>
+                                                </div><!-- .card-inner -->
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+
+                                        <div class="col-xxl-6" ng-controller="ordertop10-ctrl">
+                                            <div class="card card-full">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group">
+                                                        <div class="card-title">
+                                                            <h6 class="title">ĐƠN HÀNG MỚI - TOP 10</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="nk-tb-list mt-n2">
+                                                    <div class="nk-tb-item nk-tb-head">
+                                                        <div class="nk-tb-col"><span>Mã đơn hàng</span></div>
+                                                        <div class="nk-tb-col"><span>Tổng tiền</span></div>
+                                                        <div class="nk-tb-col tb-col-sm"><span>Người mua</span></div>
+                                                    </div>
+                                                    <div class="nk-tb-item" ng-repeat="item in items"
+                                                        ng-dblclick="edit(item.order_id)">
+                                                        <div class="nk-tb-col">
+                                                            <span class="tb-lead"><a
+                                                                    href="#">#{{item.order_id}}</a></span>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span class="tb-sub tb-amount">{{item.price | number:0}}
+                                                                <span>Đ</span></span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-sm">
+                                                            <div class="user-card">
+                                                                <div class="user-name">
+                                                                    <span
+                                                                        class="tb-lead">{{item.account.fullname}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div>
+
+                                        <div class="col-xxl-6" ng-controller="orderstatus-ctrl">
+                                            <div class="card card-full">
+                                                <div class="card-inner">
+                                                    <div class="card-title-group">
+                                                        <div class="card-title">
+                                                            <h6 class="title">ĐƠN HÀNG CHƯA XỬ LÝ</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="nk-tb-list mt-n2">
+                                                    <div class="nk-tb-item nk-tb-head">
+                                                        <div class="nk-tb-col"><span>Mã sản phẩm</span></div>
+                                                        <div class="nk-tb-col tb-col-sm"><span>Người mua</span></div>
+                                                        <div class="nk-tb-col tb-col-md"><span>Ngày đặt</span></div>
+                                                    </div>
+                                                    <div class="nk-tb-item" ng-repeat="item in pager.items"
+                                                        ng-dblclick="edit(item.order_id)">
+                                                        <div class="nk-tb-col">
+                                                            <span class="tb-lead"><a
+                                                                    href="#">#{{item.order_id}}</a></span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-sm">
+                                                            <div class="user-card">
+                                                                <div class="user-name">
+                                                                    <span
+                                                                        class="tb-lead">{{item.account.fullname}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-md">
+                                                            <span class="tb-sub">{{item.createDate | date : 'dd-MM |
+                                                                HH:mm'}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div>
+                                    </div><!-- .row -->
+                                </div><!-- .nk-block -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" tabindex="-1" role="dialog" id="modal_confirm">
+                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                            <div class="modal-content">
+                                <a href="#" class="close" data-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                                <div class="modal-body modal-body-lg">
+                                    <h5 class="title">Xác nhận xoá toàn bộ ảnh rác?</h5>
+                                    <div class="tab-content">
+                                        <div class="col-12">
+                                            <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2"
+                                                style="float: right;">
+                                                <li>
+                                                    <a ng-click="deleteRunk()"
+                                                        class="btn btn-lg btn-outline-danger">Xoá</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" data-dismiss="modal" class="link link-light">Huỷ</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div><!-- .tab-content -->
+                                </div><!-- .modal-body -->
+                            </div><!-- .modal-content -->
+                        </div><!-- .modal-dialog -->
+                    </div>
+                </div>
+
+                <!-- content @e -->
+                <!-- footer @s -->
+                <div th:replace="/admin/layout/_footer.html"></div>
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+    <script src="/admin/js/admin.js"></script>
+    <script src="/admin/assets/js/bundle.js?ver=2.2.0"></script>
+    <script src="/admin/assets/js/scripts.js?ver=2.2.0"></script>
+    <script src="/admin/assets/js/charts/chart-ecommerce.js?ver=2.2.0"></script>
+</body>
+
+</html>

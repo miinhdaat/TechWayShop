@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/index :: dynamic(~{::main})}" lang="zxx"
+    class="js">
+
+<body class="nk-body bg-lighter npc-general has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <main>
+                            <div class="nk-content-inner">
+                                <div class="nk-content-body">
+                                    <div class="nk-block-head nk-block-head-sm">
+                                        <div class="nk-block-between">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">Danh sách sản phẩm</h3>
+                                            </div><!-- .nk-block-head-content -->
+                                            <div class="nk-block-head-content">
+                                                <div class="toggle-wrap nk-block-tools-toggle">
+                                                    <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1"
+                                                        data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                                    <div class="toggle-expand-content" data-content="pageMenu">
+                                                        <ul class="nk-block-tools g-3">
+                                                            <li>
+                                                                <div class="form-control-wrap">
+                                                                    <form method="post"
+                                                                        th:action="@{/admin/product/findIdorName/1}">
+                                                                        <div class="form-icon form-icon-right">
+                                                                            <em class="icon ni ni-search"></em>
+                                                                        </div>
+                                                                        <input name="keyword" type="text"
+                                                                            class="form-control" id="default-04"
+                                                                            placeholder="Tìm sản phẩm nào đó....">
+                                                                    </form>
+                                                                </div>
+                                                            </li>
+                                                            <li class="nk-block-tools-opt">
+                                                                <a href="" data-target="searchProduct"
+                                                                    class="toggle btn btn-icon btn-primary d-md-none"><em
+                                                                        class="icon ni ni-search"></em></a>
+                                                                <a href="" data-target="searchProduct"
+                                                                    class="toggle btn btn-primary d-none d-md-inline-flex"><em
+                                                                        class="icon ni ni-search"></em><span>Tìm kiếm
+                                                                        nâng cao</span></a>
+                                                            </li>
+                                                            <li class="nk-block-tools-opt">
+                                                                <a href="" data-toggle="modal"
+                                                                    data-target="#create-product"
+                                                                    class="toggle btn btn-icon btn-primary d-md-none"><em
+                                                                        class="icon ni ni-plus"></em></a>
+                                                                <a href="" data-toggle="modal"
+                                                                    data-target="#create-product"
+                                                                    class="toggle btn btn-primary d-none d-md-inline-flex"><em
+                                                                        class="icon ni ni-plus"></em><span>Thêm
+                                                                        mới</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-block-head-content -->
+                                        </div><!-- .nk-block-between -->
+                                        <i style="float: left; margin: 10px; color: red;" th:utext="${message}"></i>
+                                        <i style="float: right; margin: 10px;">Tổng [[${sizepro} ]] sảm phẩm </i>
+                                    </div><!-- .nk-block-head -->
+                                    <div class="nk-block">
+                                        <div class="nk-tb-list is-separate mb-3">
+                                            <div class="nk-tb-item nk-tb-head">
+                                                <div class="nk-tb-col"><span>Mã</span></div>
+                                                <div class="nk-tb-col tb-col-sm"><span>Tên sản phẩm</span></div>
+                                                <div class="nk-tb-col"><span>Giá</span></div>
+                                                <div class="nk-tb-col"><span>Số lượng</span></div>
+                                                <div class="nk-tb-col tb-col-md"><span>Loại sản phẩm</span></div>
+                                                <div class="nk-tb-col tb-col-md"><span>Ngày nhập</span></div>
+                                                <div class="nk-tb-col nk-tb-col-tools"></div>
+                                            </div><!-- .nk-tb-item -->
+                                            <div class="nk-tb-item" th:each="p,state:${items.pageList}">
+                                                <div class="nk-tb-col">
+                                                    <span class="tb-sub">[[${p.Product_id}]]</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-sm">
+                                                    <span class="tb-product">
+                                                        <img th:src="@{|/assets/images/products/${p.image1}|}" alt=""
+                                                            class="thumb">
+                                                        <span class="title">[[${p.Name}]]</span>
+                                                    </span>
+                                                </div>
+                                                <div class="nk-tb-col">
+                                                    <span class="tb-lead">[[${#numbers.formatDecimal(p.unit_price, 3 ,
+                                                        'COMMA',0,'POINT')}]] Đ</span>
+                                                </div>
+                                                <div class="nk-tb-col">
+                                                    <span class="tb-sub">[[${p.quantity}]] <span
+                                                            th:if="${p.quantity} < 11   ">
+                                                            <span class="label label-warning"
+                                                                th:if="${p.quantity} >0   ">Sắp
+                                                                hết hàng</span>
+                                                        </span> <span class="label label-danger"
+                                                            th:if="${p.quantity} == 0">Hết
+                                                            hàng</span></span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-md">
+                                                    <span class="tb-sub">[[${p.category.Name}]]</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-md">
+                                                    <span>[[${p.product_date}]]</span>
+                                                </div>
+                                                <div class="nk-tb-col nk-tb-col-tools">
+                                                    <ul class="nk-tb-actions gx-1 my-n1">
+                                                        <li class="mr-n1">
+                                                            <div class="dropdown">
+                                                                <a href="#"
+                                                                    class="dropdown-toggle btn btn-icon btn-trigger"
+                                                                    data-toggle="dropdown"><em
+                                                                        class="icon ni ni-more-h"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a
+                                                                                th:href="@{|/admin/product/edit?product_id=${p.product_id}|}"><em
+                                                                                    class="icon ni ni-edit"></em><span>Cập
+                                                                                    nhật sản phẩm</span></a></li>
+                                                                        <li><a
+                                                                                th:href="@{|/admin/product/delete/${p.product_id}|}"><em
+                                                                                    class="icon ni ni-trash"></em><span>Xoá
+                                                                                    sản phẩm</a></span></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- .nk-tb-item -->
+                                        </div><!-- .nk-tb-list -->
+                                        <div class="card">
+                                            <div class="card-inner">
+                                                <div class="nk-block-between-md g-3">
+                                                    <div class="g">
+                                                        <ul
+                                                            class="pagination justify-content-center justify-content-md-start">
+                                                            <li
+                                                                th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+                                                                <a class="page-link" th:href="@{/admin/product/list}">
+                                                                    <em class="icon ni ni-chevrons-left"></em></a>
+                                                            </li>
+                                                            <li
+                                                                th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' ">
+                                                                <a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex - 1}|}">
+                                                                    <em class="icon ni ni-back-ios"></em></a>
+                                                            </li>
+
+                                                            <li th:if="${currentIndex - 2} > 0" class="page-item"><a
+                                                                    class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex - 2}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}
+                                                                        -2]]</span></a></li>
+
+                                                            <li th:if="${currentIndex - 1} != 0" class="page-item"><a
+                                                                    class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex - 1}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}
+                                                                        -1]]</span></a></li>
+
+                                                            <li class="page-item active"><a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}]]</span></a>
+                                                            </li>
+
+                                                            <li th:if="${currentIndex +1} <= ${totalPageCount}"
+                                                                class="page-item"><a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex + 1}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}
+                                                                        +1]]</span></a></li>
+
+                                                            <li th:if="${currentIndex +2} <= ${totalPageCount}"
+                                                                class="page-item"><a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex + 2}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}
+                                                                        +2]]</span></a></li>
+
+                                                            <li
+                                                                th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'">
+                                                                <a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex + 1}|}">
+                                                                    <em class="icon ni ni-forward-ios"></em></a>
+                                                            </li>
+                                                            <li
+                                                                th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+                                                                <a class="page-link"
+                                                                    th:href="@{|${baseUrl}${totalPageCount}|}">
+                                                                    <em class="icon ni ni-chevrons-right"></em></a>
+                                                            </li>
+                                                        </ul><!-- .pagination -->
+                                                    </div>
+                                                </div><!-- .nk-block-between -->
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-block -->
+
+                                    <div class="nk-add-product toggle-slide toggle-slide-right"
+                                        data-content="searchProduct" data-toggle-screen="any" data-toggle-overlay="true"
+                                        data-toggle-body="true" data-simplebar>
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content">
+                                                <h5 class="nk-block-title">Tìm kiếm</h5>
+                                                <div class="nk-block-des">
+                                                    <p>Công cụ tìm kiếm nâng cao.</p>
+                                                </div>
+                                            </div>
+                                        </div><!-- .nk-block-head -->
+                                        <div class="nk-block">
+                                            <form th:action="@{/admin/product/findallkeyword/1}">
+                                                <div class="row g-3">
+                                                    <div class="col-mb-6">
+                                                        <div class="form-group">
+                                                            <div class="form-group" data-select2-id="13">
+                                                                <label class="form-label" for="2">Từ giá </label>
+                                                                <select class="form-control" name="MinPrice"
+                                                                    data-live-search="true" style="height: 36px;">
+                                                                    <option value="0">Tất cả</option>
+                                                                    <option value="1000000">1,000,000 Đ</option>
+                                                                    <option value="2000000">2,000,000 Đ</option>
+                                                                    <option value="5000000">5,000,000 Đ </option>
+                                                                    <option value="10000000">10,000,000 Đ</option>
+                                                                    <option value="15000000">15,000,000 Đ</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-mb-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="1">Đến giá </label>
+                                                            <select class="form-control" name="MaxPrice"
+                                                                data-live-search="true" style="height: 36px;">
+                                                                <option value="1000000000">Tất cả</option>
+                                                                <option value="2000000">2,000,000 Đ</option>
+                                                                <option value="5000000">5,000,000 Đ</option>
+                                                                <option value="10000000">10,000,000 Đ</option>
+                                                                <option value="15000000">15,000,000 Đ</option>
+                                                                <option value="50000000">50,000,000 Đ</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="product-title">Danh
+                                                                mục</label>
+                                                            <select name="Category_id" data-live-search="true"
+                                                                class="form-group col-sm-12 selectpicker show-tick"
+                                                                style="height: 36px;">
+                                                                <option hidden="true" value="">Tất cả</option>
+                                                                <div class="form-group selectpicker show-tick"
+                                                                    th:each="c,state:${cates}">
+                                                                    <option th:value="${c.Category_id}">[[${c.name}]]
+                                                                    </option>
+                                                                </div>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="stock">Thương hiệu</label>
+                                                            <select name="Trademark_id" data-live-search="true"
+                                                                class="form-group col-sm-12 selectpicker show-tick"
+                                                                style="height: 36px;">
+                                                                <option hidden="true" value="">Tất cả</option>
+                                                                <div class="form-group selectpicker show-tick"
+                                                                    th:each="t,state:${trads}">
+                                                                    <option th:value="${t.Trademark_id}">[[${t.Name}]]
+                                                                    </option>
+                                                                </div>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="stock">Tình trạng</label>
+                                                            <select class="form-control" name="Status"
+                                                                data-live-search="true" style="height: 36px;">
+                                                                <option value="">Tất cả</option>
+                                                                <option value="1">Hiển thị</option>
+                                                                <option value="0">Ẩn</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn btn-primary"><em
+                                                                class="icon ni ni-search"></em><span>Tìm
+                                                                kiếm</span></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div><!-- .nk-block -->
+                                    </div>
+
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="create-product">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <a href="#" class="close" data-dismiss="modal"><em
+                                                        class="icon ni ni-cross-sm"></em></a>
+                                                <div class="modal-body modal-body-lg">
+                                                    <h5 class="title">Thêm sản phẩm mới</h5>
+                                                    <div class="tab-content">
+                                                        <form th:action="@{/admin/product/create}" method="post"
+                                                            modelAttribute="pro" enctype="multipart/form-data">
+                                                            <div class="row gy-4">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="idSP">Mã sản phẩm
+                                                                            *</label>
+                                                                        <input type="text" name="Product_id"
+                                                                            readonly="readonly"
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Tên sản
+                                                                            phẩm *</label>
+                                                                        <input type="text" name="Name"
+                                                                            th:value="${pro.Name}" required
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP"><i
+                                                                                readonly>Chọn nhiều ảnh một lúc *</i></label>
+                                                                        <div class="custom-file">
+                                                                            <input type="hidden" name="Image1"
+                                                                                th:value="${pro.Image1}">
+                                                                            <input type="file" name="photo_img"
+                                                                                class="custom-file-input"
+                                                                                id="customFile" multiple>
+                                                                            <input type="hidden" name="Image2"
+                                                                                th:value="${pro.Image2}">
+                                                                            <input type="hidden" name="Image3"
+                                                                                th:value="${pro.Image3}">
+                                                                            <input type="hidden" name="Image4"
+                                                                                th:value="${pro.Image4}">
+                                                                            <label class="custom-file-label"
+                                                                                for="customFile">Chọn file</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Số lượng
+                                                                            *</label>
+                                                                        <input type="number" name="Quantity"
+                                                                            th:value="${pro.Quantity}" required
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Giá cả
+                                                                            *</label>
+                                                                        <input type="number" name="Unit_price"
+                                                                            th:value="${pro.Unit_price}" required
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Ngày tạo
+                                                                            sản phẩm *</label>
+                                                                        <input type="date" name="Product_date"
+                                                                            th:value="${pro.Product_date}" required
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Danh mục
+                                                                            *</label>
+                                                                        <select name="category.Category_id"
+                                                                            data-live-search="true"
+                                                                            class="form-group col-sm-12 selectpicker show-tick"
+                                                                            style="height: 36px;">
+
+                                                                            <div class="form-group selectpicker show-tick"
+                                                                                th:each="c,state:${cates}">
+                                                                                <option th:value="${c.Category_id}">
+                                                                                    [[${c.name}]]</option>
+                                                                            </div>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Thương
+                                                                            hiệu *</label>
+                                                                        <select name="trademark.Trademark_id"
+                                                                            data-live-search="true"
+                                                                            class="form-group col-sm-12 selectpicker show-tick"
+                                                                            style="height: 36px;">
+
+                                                                            <div class="form-group selectpicker show-tick"
+                                                                                th:each="t,state:${trads}">
+                                                                                <option th:value="${t.Trademark_id}">
+                                                                                    [[${t.Name}]]</option>
+                                                                            </div>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Loại hàng
+                                                                            *</label>
+                                                                        <select class="form-control" name="Lastest"
+                                                                            data-live-search="true"
+                                                                            style="height: 36px;">
+
+                                                                            <option hidden="true"
+                                                                                th:value="${pro.Lastest}"
+                                                                                th:if="${pro.Lastest}==true">Hàng mới
+                                                                            </option>
+                                                                            <option hidden="true"
+                                                                                th:value="${pro.Lastest}"
+                                                                                th:if="${pro.Lastest}==false">Hàng cũ
+                                                                            </option>
+
+                                                                            <option value="true">Hàng mới</option>
+                                                                            <option value="false">Hàng cũ</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Khuyến
+                                                                            mãi *</label>
+                                                                        <input type="number" name="Distcount"
+                                                                            th:value="${pro.Distcount}"
+                                                                            class="form-control" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Trạng
+                                                                            thái *</label>
+                                                                        <select class="form-control" name="Status"
+                                                                            data-live-search="true"
+                                                                            style="height: 36px;">
+
+                                                                            <option hidden="true"
+                                                                                th:value="${pro.Status}"
+                                                                                th:if="${pro.Status}==true">Hiển thị
+                                                                            </option>
+                                                                            <option hidden="true"
+                                                                                th:value="${pro.Status}"
+                                                                                th:if="${pro.Status}==false">Ẩn</option>
+
+                                                                            <option value="true">Hiển thị</option>
+                                                                            <option value="false">Ẩn</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Đặc biệt
+                                                                            *</label>
+                                                                        <select class="form-control" name="Special"
+                                                                            data-live-search="true"
+                                                                            style="height: 36px;">
+
+                                                                            <option hidden="true"
+                                                                                th:value="${pro.Special}"
+                                                                                th:if="${pro.Special}==true">Có</option>
+                                                                            <option hidden="true"
+                                                                                th:value="${pro.Special}"
+                                                                                th:if="${pro.Special}==false">Không
+                                                                            </option>
+
+                                                                            <option value="true">Có</option>
+                                                                            <option value="false">Không</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Miêu tả
+                                                                            *</label>
+                                                                        <textarea type="text" cols="7" rows="3"
+                                                                            name="Description"
+                                                                            th:value="${pro.Description}" required
+                                                                            class="form-control form-control-lg"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="idSP">Chi tiết
+                                                                            *</label>
+                                                                        <textarea
+                                                                            class="form-control form-control-lg ckeditor"
+                                                                            type="text" cols="7" rows="3" name="Detail"
+                                                                            th:value="${pro.Detail}">[[${pro.Detail}]]</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <ul
+                                                                        class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                        <li>
+                                                                            <button type="submit"
+                                                                                class="btn btn-lg btn-primary">Thêm
+                                                                                mới</button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" data-dismiss="modal"
+                                                                                class="link link-light">Huỷ</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div><!-- .tab-content -->
+                                                </div><!-- .modal-body -->
+                                            </div><!-- .modal-content -->
+                                        </div><!-- .modal-dialog -->
+                                    </div><!-- .modal -->
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+</body>
+
+</html>

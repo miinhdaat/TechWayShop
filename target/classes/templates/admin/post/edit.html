@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/index :: dynamic(~{::main})}" lang="zxx"
+    class="js">
+
+<body class="nk-body bg-lighter npc-general has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <main>
+                        <div class="container-fluid">
+                            <div class="nk-content-inner">
+                                <div class="nk-content-body">
+                                    <div class="nk-block-head nk-block-head-sm">
+                                        <div class="nk-block-between g-3">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">Chi tiết bài viết / <strong
+                                                        class="text-primary small"
+                                                        th:utext="${post.Post_Name}"></strong></h3>
+                                                <div class="nk-block-des text-soft">
+                                                    <ul class="list-inline">
+                                                        <li>ID bài viết: <span
+                                                                class="text-base">#[[${post.Post_id}]]</span></li>
+                                                        <li>Ngày đăng: <span class="text-base"
+                                                                th:text="${post.Post_date}"></span></li>
+                                                        <!-- <li><i class="text-danger" th:utext="${message}"></i></li> -->
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="nk-block-head-content">
+                                                <a th:href="@{/admin/post/list}"
+                                                    class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em
+                                                        class="icon ni ni-arrow-left"></em><span>Back</span></a>
+                                                <a th:href="@{/admin/post/list}"
+                                                    class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em
+                                                        class="icon ni ni-arrow-left"></em></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nk-block">
+                                        <div class="card">
+                                            <div class="card-aside-wrap">
+                                                <div class="card-content">
+                                                    <ul class="nav nav-tabs nav-tabs-mb-icon nav-tabs-card">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" href=""><em
+                                                                    class="icon ni ni-file-text"></em><span>Chi
+                                                                    tiết</span></a>
+                                                        <li class="nav-item nav-item-trigger">
+                                                            <a href="" class="toggle btn btn-icon btn-trigger"
+                                                                data-toggle="modal" data-target="#update">Cập nhật</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="card-inner">
+                                                        <div class="nk-block">
+                                                            <div class="nk-block-head">
+                                                                <h5 class="title">Thông tin</h5>
+                                                            </div>
+                                                            <div class="profile-ud-list">
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Tên bài
+                                                                            viết</span>
+                                                                        <span
+                                                                            class="profile-ud-value">[[${post.Post_Name}]]</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Trạng thái</span>
+                                                                        <span class="profile-ud-value text-primary"
+                                                                            th:if="${post.Status==true}">Đang hiển
+                                                                            thị</span>
+                                                                        <span class="profile-ud-value text-danger"
+                                                                            th:if="${post.Status==false}">Đang ẩn</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Ngày đăng</span>
+                                                                        <span class="profile-ud-value"
+                                                                            th:text="${post.Post_date}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-block pt-0">
+                                                            <div class="bq-note">
+                                                                <div class="bq-note-item">
+                                                                    <div class="bq-note-meta mb-2">
+                                                                        <span class="bq-note-added"
+                                                                            style="font-size: 14px;">Nội dung tóm
+                                                                            tắt</span>
+                                                                    </div>
+                                                                    <div class="bq-note-text">
+                                                                        <p>[[${post.Post_conten}]]</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="bq-note-item">
+                                                                    <div class="bq-note-meta mb-2">
+                                                                        <span class="bq-note-added"
+                                                                            style="font-size: 14px;">Nội dung chi
+                                                                            tiết</span>
+                                                                    </div>
+                                                                    <div class="bq-note-text">
+                                                                        <p th:utext="${post.Detail}"></p>
+                                                                        <!-- <textarea name="Detail" th:value="${post.Detail}" class="form-control ckeditor"></textarea> -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="bq-note-item">
+                                                                    <div class="bq-note-meta mb-2">
+                                                                        <span class="bq-note-added"
+                                                                            style="font-size: 14px;">Hình miêu tả</span>
+                                                                            <span style="float: right;"><button data-toggle="modal" data-target="#updateImage" class="btn btn-outline-secondary">Cập nhật ảnh</button></span>
+                                                                    </div>
+                                                                    <div class="text-center">
+                                                                        <label for="image"> <img
+                                                                                th:src="@{|/assets/images/post/${post.image}|}"
+                                                                                style="max-width: 100%; height: 200px;"
+                                                                                alt="Photo User">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-block-head-content mb-3" style="float: right;">
+                                                            <a data-toggle="modal" data-target="#modal_confirm"
+                                                                class="btn btn-outline-danger"><em
+                                                                    class="icon ni ni-cross-circle"></em><span>Xoá bài
+                                                                    viết</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        < </div>
+                                    </div>
+
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="modal_confirm">
+                                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                                            <div class="modal-content">
+                                                <a href="#" class="close" data-dismiss="modal"><em
+                                                        class="icon ni ni-cross-sm"></em></a>
+                                                <div class="modal-body modal-body-lg">
+                                                    <h5 class="title">Xác nhận xoá bài viết này?</h5>
+                                                    <div class="tab-content">
+                                                        <div class="col-12">
+                                                            <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2"
+                                                                style="float: right;">
+                                                                <li>
+                                                                    <a th:href="@{|/admin/post/delete/${post.Post_id}|}"
+                                                                        class="btn btn-lg btn-primary">Xoá</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" data-dismiss="modal"
+                                                                        class="link link-light">Huỷ</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div><!-- .tab-content -->
+                                                </div><!-- .modal-body -->
+                                            </div><!-- .modal-content -->
+                                        </div><!-- .modal-dialog -->
+                                    </div>
+
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="updateImage">
+                                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                                            <div class="modal-content">
+                                                <a href="#" class="close" data-dismiss="modal"><em
+                                                        class="icon ni ni-cross-sm"></em></a>
+                                                <div class="modal-body modal-body-md">
+                                                    <h5 class="title">Cập nhật hình ảnh</h5>
+                                                    <div class="tab-content">
+                                                        <form th:action="@{/admin/post/update/images}" method="post" modelAttribute="post" enctype="multipart/form-data">
+                                                            <div class="row gy-4">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="Post_id" th:value="${post.Post_id}" hidden>
+                                                                        <label class="form-label" for="nameSP"><i readonly>Hình ảnh *</i></label>
+                                                                        <div class="custom-file">
+                                                                            <input type="hidden" name="image" th:value="${post.image}">
+                                                                            <input type="file" name="photo_img" class="custom-file-input" id="customFile">
+                                                                            <label class="custom-file-label" for="customFile">Chọn file</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <ul
+                                                                        class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                        <li>
+                                                                            <button type="submit"
+                                                                                class="btn btn-lg btn-primary">Cập
+                                                                                nhật</button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" data-dismiss="modal"
+                                                                                class="link link-light">Huỷ</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div><!-- .tab-content -->
+                                                </div><!-- .modal-body -->
+                                            </div><!-- .modal-content -->
+                                        </div><!-- .modal-dialog -->
+                                    </div><!-- .modal -->
+
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="update">
+                                        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                                            <div class="modal-content">
+                                                <a href="#" class="close" data-dismiss="modal"><em
+                                                        class="icon ni ni-cross-sm"></em></a>
+                                                <div class="modal-body modal-body-md">
+                                                    <h5 class="title">Cập nhật thông tin</h5>
+                                                    <div class="tab-content">
+                                                        <form th:action="@{/admin/post/update}" method="post"
+                                                            modelAttribute="post">
+                                                            <div class="row gy-4">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="full-name">Tên
+                                                                            bài viết *</label>
+                                                                        <input type="text" name="Post_Name"
+                                                                            th:value="${post.Post_Name}"
+                                                                            class="form-control form-control-lg">
+                                                                        <input type="text" name="Post_id"
+                                                                            th:value="${post.Post_id}" hidden>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="full-name">Trạng
+                                                                            thái
+                                                                            *</label>
+                                                                        <select class="form-control" name="Status"
+                                                                            data-live-search="true"
+                                                                            style="height: 36px;">
+                                                                            <option hidden="true"
+                                                                                th:value="${post.Status}"
+                                                                                th:if="${post.Status}==true">Hiển thị
+                                                                            </option>
+                                                                            <option hidden="true"
+                                                                                th:value="${post.Status}"
+                                                                                th:if="${post.Status}==false">Không hiển
+                                                                                thị</option>
+                                                                            <option value="true">Hiển thị</option>
+                                                                            <option value="false">Không hiển thị
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="full-name">Ngày
+                                                                            đăng
+                                                                            *</label>
+                                                                            <input type="hidden" name="image" th:value="${post.image}">
+                                                                        <input type="date" name="Post_date"
+                                                                            th:value="${post.Post_date}"
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="phone-no">Nội
+                                                                            dung tóm tắt
+                                                                            *</label>
+                                                                        <textarea type="text" name="Post_conten"
+                                                                            th:value="${post.Post_conten}"
+                                                                            class="form-control form-control-lg">[[${post.Post_conten}]]</textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="phone-no">Chi
+                                                                            tiết
+                                                                            *</label>
+                                                                        <textarea type="text" name="Detail"
+                                                                            th:value="${post.Detail}"
+                                                                            class="form-control form-control-lg ckeditor">[[${post.Detail}]]</textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-12">
+                                                                    <ul
+                                                                        class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                        <li>
+                                                                            <button type="submit"
+                                                                                class="btn btn-lg btn-primary">Cập
+                                                                                nhật</button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" data-dismiss="modal"
+                                                                                class="link link-light">Huỷ</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div><!-- .tab-content -->
+                                                </div><!-- .modal-body -->
+                                            </div><!-- .modal-content -->
+                                        </div><!-- .modal-dialog -->
+                                    </div><!-- .modal -->
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+</body>
+
+</html>

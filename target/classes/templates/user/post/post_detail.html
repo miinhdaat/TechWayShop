@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/layout/index :: dynamic(~{::main})}" lang="en" dir="ltr">
+
+<head>
+
+<body>
+    <div class="page-wrapper">
+        <main class="main" th:object="${item}">
+            <div class="page-header text-center" style="background-image: url('/assets/images/backgrounds/bg-2.jpg')">
+                <div class="container">
+                    <h1 class="page-title" style="color: aliceblue;">Tin tức<span>Shop</span></h1>
+                </div>
+            </div>
+
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home/index}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/product/list}">Cửa hàng</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/post/list}">Danh sách tin tức</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Tin tức</li>
+                    </ol>
+                </div>
+            </nav>
+
+            <div class="container">
+                <div class="t1 mb-2 pb-3 pt-2">
+                    <div class="title-t1">
+                        <p class="title-t2" th:text="*{post_conten}"></p>
+                    </div>
+                    <br>
+                    <div>
+                        <p class="title-t3" th:utext="*{Detail}"></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

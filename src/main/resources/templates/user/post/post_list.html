@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/layout/index :: dynamic(~{::main})}" lang="en" dir="ltr">
+
+<body>
+    <div class="page-wrapper">
+        <main class="main">
+            <div class="page-header text-center" style="background-image: url('/assets/images/backgrounds/bg-2.jpg')">
+                <div class="container">
+                    <h1 class="page-title" style="color: aliceblue;">Danh sách tin tức<span>Shop</span></h1>
+                </div>
+            </div>
+
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home/index}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/product/list}">Cửa hàng</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Tin tức</li>
+                    </ol>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="tin-tuc mb-3">
+                    <div class="tin-tuc1 mb-3 p-2" th:each="post:${items.pageList}">
+                        <div class="title-tt">
+                            <a class="title1" th:href="@{|/post/detail/${post.post_id}|}">[[${post.Post_Name}]]</a>
+                        </div>
+                        <div class="center-tt mb-2">
+                            <a class="img-tt" th:href="@{|/post/detail/${post.post_id}|}">
+                                <img style="min-width: 250px;height: 200px; width: 100%; object-fit: cover; object-position: center;"
+                                    th:src="@{|/assets/images/post/${post.image}|}" alt="">
+                            </a>
+                            <p class="tt2" style="word-wrap:break-word; overflow: hidden; height: 180px;">[[${post.post_conten}]]</p>
+                        </div>
+                        <div class="footer-tt">
+                            <div class="icon-tt">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <i>[[${#dates.format(post.post_date, 'yyyy-MM-dd')}]]</i>
+                            </div>
+                            <div class="btn-tt">
+                                <a th:href="@{|/post/detail/${post.post_id}|}">Xem<i
+                                        class="bi bi-caret-right-fill ml-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+                            <a class="page-link page-link-prev" th:href="@{/post/list}" aria-label="Previous"
+                                tabindex="-1" aria-disabled="true">
+                                <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Trang
+                                đầu
+                            </a>
+                        </li>
+                        <li th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' " class="page-item active"
+                            aria-current="page">
+                            <a class="page-link" th:href="@{|${baseUrl}${currentIndex - 1}|}" title='Lùi 1 trang'><span
+                                    aria-hidden="true">«</span></a>
+                        </li>
+                        <li th:if="${currentIndex - 1} != 0" class="page-item" aria-current="page">
+                            <a class="page-link" th:href="@{|${baseUrl}${currentIndex - 1}|}"><span
+                                    aria-hidden="true">[[${currentIndex}
+                                    -1]]</span></a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" th:href="@{|${baseUrl}${currentIndex}|}"><span
+                                    aria-hidden="true">[[${currentIndex}]]</span></a></li>
+                        <li th:if="${currentIndex +1} <= ${totalPageCount}" class="page-item"><a class="page-link"
+                                th:href="@{|${baseUrl}${currentIndex + 1}|}"><span aria-hidden="true">[[${currentIndex}
+                                    +1]]</span></a></li>
+                        <li th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'"
+                            class="page-item active" aria-current="page">
+                            <a class="page-link" th:href="@{|${baseUrl}${currentIndex + 1}|}" title='Tiến 1 trang'><span
+                                    aria-hidden="true">»</span></a>
+                        </li>
+                        <li class="page-item"
+                            th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+                            <a class="page-link page-link-next" th:href="@{|${baseUrl}${totalPageCount}|}"
+                                aria-label="Next">
+                                Trang cuối <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </main>
+</body>
+
+</html>

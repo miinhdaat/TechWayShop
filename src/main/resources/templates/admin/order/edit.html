@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/index :: dynamic(~{::main})}" lang="zxx"
+    class="js">
+
+<body class="nk-body bg-lighter npc-general has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <main>
+                        <div class="container-fluid">
+                            <div class="nk-content-inner">
+                                <div class="nk-content-body">
+                                    <div class="nk-block-head nk-block-head-sm">
+                                        <div class="nk-block-between g-3">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">Chi tiết hoá đơn</h3>
+                                                <div class="nk-block-des text-soft">
+                                                    <ul class="list-inline">
+                                                        <li>ID sản phẩm: <span
+                                                                class="text-base">#[[${ord.Order_id}]]</span></li>
+                                                        <li>Ngày bán: <span class="text-base"
+                                                                th:text="${#dates.format(ord.CreateDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="nk-block-head-content">
+                                                <a th:href="@{/admin/order/list}"
+                                                    class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em
+                                                        class="icon ni ni-arrow-left"></em><span>Back</span></a>
+                                                <a th:href="@{/admin/order/list}"
+                                                    class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em
+                                                        class="icon ni ni-arrow-left"></em></a>
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-block-head -->
+                                    <div class="nk-block">
+                                        <div class="card">
+                                            <div class="card-aside-wrap">
+                                                <div class="card-content">
+                                                    <ul class="nav nav-tabs nav-tabs-mb-icon nav-tabs-card">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" href=""><em
+                                                                    class="icon ni ni-file-text"></em><span>Chi
+                                                                    tiết</span></a>
+                                                        <li class="nav-item nav-item-trigger">
+                                                            <a href="" class="toggle btn btn-icon btn-trigger"
+                                                                data-toggle="modal" data-target="#update">Cập nhật trạng
+                                                                thái đơn hàng</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="card-inner">
+                                                        <div class="nk-block">
+                                                            <div class="nk-block-head">
+                                                                <h5 class="title">Thông tin</h5>
+                                                            </div>
+                                                            <div class="profile-ud-list">
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Mã đơn
+                                                                            hàng</span>
+                                                                        <span
+                                                                            class="profile-ud-value">#[[${ord.Order_id}]]</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="profile-ud-list">
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Tên khách
+                                                                            hàng</span>
+                                                                        <span class="profile-ud-value"
+                                                                            th:text="${ord.account.Fullname}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Số điện
+                                                                            thoại</span>
+                                                                        <span class="profile-ud-value"
+                                                                            th:text="${ord.Phone}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Ngày đặt
+                                                                            hàng</span>
+                                                                        <span class="profile-ud-value"
+                                                                            th:text="${#dates.format(ord.CreateDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Trạng thái</span>
+                                                                        <span th:if="${ord.status==0}"
+                                                                            class="profile-ud-value"
+                                                                            style="color: #00008B;">Đang xử lý</span>
+                                                                        <span th:if="${ord.status==1}"
+                                                                            class="profile-ud-value"
+                                                                            style="color: #FFD700;">Đang giao
+                                                                            hàng</span>
+                                                                        <span th:if="${ord.status==3}"
+                                                                            class="profile-ud-value"
+                                                                            style="color: #2E8B57;">Đã hoàn thành</span>
+                                                                        <span th:if="${ord.status==2}"
+                                                                            class="profile-ud-value"
+                                                                            style="color: #DC143C;">Hủy giao hàng</span>
+                                                                        <span th:if="${ord.status==4}"
+                                                                            class="profile-ud-value"
+                                                                            style="color: #DC143C;">Đã huỷ</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Hình thức
+                                                                            TT</span>
+                                                                        <span class="profile-ud-value"
+                                                                            th:text="${ord.method}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Trạng thái
+                                                                            TT</span>
+                                                                        <span class="profile-ud-value"
+                                                                            th:text="${ord.description}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Tổng tiền</span>
+                                                                        <span
+                                                                            class="profile-ud-value">[[${#numbers.formatDecimal(ord.price,
+                                                                            3 , 'COMMA',0,'POINT')} ]] Đ</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="profile-ud-item">
+                                                                    <div class="profile-ud wider">
+                                                                        <span class="profile-ud-label">Tiền tệ</span>
+                                                                        <span class="profile-ud-value"
+                                                                            th:text="${ord.currency}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-block pt-0">
+                                                            <div class="bq-note">
+                                                                <div class="bq-note-item">
+                                                                    <div class="bq-note-meta mb-2">
+                                                                        <span class="bq-note-added"
+                                                                            style="font-size: 14px;">Địa chỉ</span>
+                                                                    </div>
+                                                                    <div class="bq-note-text">
+                                                                        <p>[[${ord.Address}]]</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bq-note">
+                                                                <div class="bq-note-item">
+                                                                    <div class="bq-note-meta mb-2">
+                                                                        <span class="bq-note-added"
+                                                                            style="font-size: 14px;">Danh sách sản phẩm
+                                                                            đơn hàng</span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div
+                                                                            class="nk-tb-list is-separate is-medium mb-3">
+                                                                            <div class="nk-tb-item nk-tb-head">
+                                                                                <div class="nk-tb-col"><span>Số thứ
+                                                                                        tự</span></div>
+                                                                                <div class="nk-tb-col tb-col-md">
+                                                                                    <span>Sản phẩm</span></div>
+                                                                                <div class="nk-tb-col tb-col-sm">
+                                                                                    <span>Số lượng</span></div>
+                                                                                <div class="nk-tb-col"><span>Tổng
+                                                                                        tiền</span></div>
+                                                                            </div><!-- .nk-tb-item -->
+                                                                            <div class="nk-tb-item"
+                                                                                th:each="odt,state:${odetail}">
+                                                                                <div class="nk-tb-col">
+                                                                                    <span class="tb-lead"><a
+                                                                                            href="#">[[${state.index}
+                                                                                            +1]]</a></span>
+                                                                                </div>
+                                                                                <div class="nk-tb-col tb-col-sm">
+                                                                                    <span class="tb-product">
+                                                                                        <img th:src="@{|/assets/images/products/${odt.product.Image1}|}"
+                                                                                            alt="" class="thumb">
+                                                                                        <span
+                                                                                            class="title">[[${odt.product.Name}]]</span>
+                                                                                    </span>
+                                                                                </div>
+                                                                                <div class="nk-tb-col tb-col-sm">
+                                                                                    <span
+                                                                                        class="tb-sub">[[${odt.Quantity}]]
+                                                                                        Chiếc</span>
+                                                                                </div>
+                                                                                <div class="nk-tb-col">
+                                                                                    <span
+                                                                                        class="tb-lead">[[${#numbers.formatDecimal((odt.Price*odt.Quantity)
+                                                                                        , 3 ,
+                                                                                        'COMMA',0,'POINT')}]] Đ</span>
+                                                                                </div>
+                                                                            </div><!-- .nk-tb-item -->
+                                                                        </div><!-- .nk-tb-list -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-block-head-content mb-3" style="float: right;">
+                                                            <a th:href="@{|/admin/order/sent/${ord.Order_id}|}"
+                                                                class="btn btn-outline-light"><em
+                                                                    class="icon ni ni-emails"></em><span>Gửi
+                                                                    mail!</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" tabindex="-1" role="dialog" id="update">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                        <div class="modal-content">
+                                            <a href="#" class="close" data-dismiss="modal"><em
+                                                    class="icon ni ni-cross-sm"></em></a>
+                                            <div class="modal-body modal-body-md">
+                                                <h5 class="title">Cập nhật trạng thái <br> Mã đơn: #[[${ord.Order_id}]]
+                                                </h5>
+                                                <div class="tab-content">
+                                                    <form th:action="@{/admin/order/updateStatus}" method="post"
+                                                        modelAttribute="ord">
+                                                        <div class="row gy-4">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="phone-no">Trạng thái
+                                                                        *</label>
+                                                                    <input type="text" name="Order_id"
+                                                                        th:value="${ord.Order_id}" hidden>
+                                                                    <select name="Status" class="form-control">
+                                                                        <option hidden="true" th:value="${ord.Status}">
+                                                                            <b style="color: #00008B;">[[${ord.status==0?'Đang
+                                                                                xử lý' :''}]]</b>
+                                                                            <b style="color: #FFD700;">[[${ord.status==1?'Đang
+                                                                                giao hàng' :''}]]</b>
+                                                                            <b style="color: #2E8B57;">[[${ord.status==3?'Hoàn
+                                                                                thành đơn hành' :''}]]</b>
+                                                                            <b style="color: #DC143C;">[[${ord.status==2?'Hủy
+                                                                                giao hàng·' :''}]]</b>
+                                                                            <b style="color: #DC143C;">[[${ord.status==4?'Đã
+                                                                                hủy·' :''}]]</b>
+
+                                                                        </option>
+                                                                        <option value="0">Đang
+                                                                            xử lý </option>
+                                                                        <option value="1">Đang
+                                                                            giao hàng</option>
+                                                                        <option value="3">Hoàn
+                                                                            thành đơn hành</option>
+                                                                        <option value="2">Hủy giao hàng </option>
+                                                                        <option value="4">Đã hủy </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                                <ul
+                                                                    class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                    <li>
+                                                                        <button type="submit"
+                                                                            class="btn btn-lg btn-primary">Cập
+                                                                            nhật</button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#" data-dismiss="modal"
+                                                                            class="link link-light">Huỷ</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div><!-- .tab-content -->
+                                            </div><!-- .modal-body -->
+                                        </div><!-- .modal-content -->
+                                    </div><!-- .modal-dialog -->
+                                </div><!-- .modal -->
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+</body>
+
+</html>

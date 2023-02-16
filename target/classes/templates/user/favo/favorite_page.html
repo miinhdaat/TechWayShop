@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/layout/index :: dynamic(~{::main})}">
+
+<body>
+    <div class="page-wrapper">
+        <main class="main">
+            <div class="page-header text-center" style="background-image: url('/assets/images/backgrounds/bg-2.jpg')">
+                <div class="container">
+                    <h1 class="page-title" style="color: aliceblue;">Danh sách yêu thích<span>Shop</span></h1>
+                </div>
+            </div>
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home/index}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/product/list}">Cửa hàng</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Sản phẩm yêu thích</li>
+                    </ol>
+                </div>
+            </nav>
+
+            <div class="page-content">
+                <div class="container" style="min-height: 500px;">
+                    <table class="table table-wishlist table-mobile">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Sản phẩm</th>
+                                <th>Khuyến mãi</th>
+                                <th>Giá</th>
+                                <th>Trạng thái</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="favo,state:${listfavo}">
+                                <td>[[${state.index}]]</td>
+                                <td class="product-col">
+                                    <div class="product">
+                                        <figure class="product-media">
+                                            <a th:href="@{|/product/detail/${favo.product.Product_id}|}">
+                                                <img th:src="@{|/assets/images/products/${favo.product.Image1}|}"
+                                                    alt="Product image">
+                                            </a>
+                                        </figure>
+
+                                        <h3 class="product-title">
+                                            <a
+                                                th:href="@{|/product/detail/${favo.product.Product_id}|}">[[${favo.product.Name}]]</a>
+                                        </h3>
+                                    </div>
+                                </td>
+                                <td class="price-col">[[${favo.product.Distcount}]] %</td>
+                                <td class="price-col">[[${#numbers.formatDecimal(favo.product.Unit_price, 3 ,
+                                    'COMMA',0,'POINT')}]] Đ</td>
+                                <td class="stock-col">
+                                    <span class="out-of-stock" th:if="*{favo.product.quantity} ==0">Hết hàng</span>
+                                    <span class="in-stock" th:if="*{favo.product.quantity} !=0"><a>Còn hàng</a></span>
+                                <td class="action-col">
+                                    <span th:if="*{favo.product.quantity} ==0"><button
+                                            class="btn btn-block btn-outline-primary-2 disabled">Hết
+                                            hàng</button></span>
+                                    <span th:if="*{favo.product.quantity} !=0"><a
+                                            th:attr="ng-click=@{|cart.add(${favo.product.product_id})|}"
+                                            class="btn btn-block btn-outline-primary-2"><i
+                                                class="icon-cart-plus"></i>Thêm vào giỏ</a></span>
+
+                                </td>
+                                <td class="remove-col"><a th:href="@{|/favolist/remove/${favo.product.product_id}|}"
+                                        class="btn-remove"><i class="icon-close"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+        <div class="mobile-menu-overlay"></div>
+    </div>
+</body>
+
+</html>

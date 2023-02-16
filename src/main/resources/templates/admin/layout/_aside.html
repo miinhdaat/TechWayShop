@@ -1,0 +1,100 @@
+<div class="nk-sidebar nk-sidebar-fixed is-light " data-content="sidebarMenu">
+    <div class="nk-sidebar-element nk-sidebar-head">
+        <div class="nk-sidebar-brand">
+            <a th:href="@{/admin/home/index}" class="logo-link nk-sidebar-logo">
+                <img class="logo-light logo-img" style="width: 34px;" src="/assets/images/icons/HASicon.png" srcset="/assets/images/icons/HASicon.png 2x" alt="logo">
+                <img class="logo-dark logo-img" style="width: 34px;" src="/assets/images/icons/HASicon.png" srcset="/assets/images/icons/HASicon.png 2x" alt="logo-dark">
+                <img class="logo-small logo-img logo-img-small" style="width: 34px;" src="/assets/images/icons/HASicon.png" srcset="/assets/images/icons/HASicon.png 2x" alt="logo-small">
+            </a>
+        </div>
+        <div class="nk-menu-trigger mr-n2">
+            <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu"><em class="icon ni ni-arrow-left"></em></a>
+            <a href="#" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
+        </div>
+    </div><!-- .nk-sidebar-element -->
+    <div class="nk-sidebar-element">
+        <div class="nk-sidebar-content">
+            <div class="nk-sidebar-menu" data-simplebar>
+                <ul class="nk-menu">
+                    <li class="nk-menu-item">
+                        <a th:href="@{/admin/home/index}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-dashboard-fill"></em></span>
+                            <span class="nk-menu-text">Trang chính</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-package-fill"></em></span>
+                            <span class="nk-menu-text">Quản lý hàng hoá</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a th:href="@{/admin/product/list}" class="nk-menu-link"><span class="nk-menu-text">Sản phẩm</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a th:href="@{/admin/category/list}" class="nk-menu-link"><span class="nk-menu-text">Loại hàng</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a th:href="@{/admin/trademark/list}" class="nk-menu-link"><span class="nk-menu-text">Thương hiệu</span></a>
+                            </li>
+                        </ul><!-- .nk-menu-sub -->
+                    </li>
+                    <li class="nk-menu-item">
+                        <a th:href="@{/admin/order/list}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-bag-fill"></em></span>
+                            <span class="nk-menu-text">Quản lý đơn hàng</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-growth-fill"></em></span>
+                            <span class="nk-menu-text">Thống kê</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a th:href="@{/admin/char/product}" class="nk-menu-link"><span class="nk-menu-text">Theo sản phẩm</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a th:href="@{/admin/char/charyear?year=2022}" class="nk-menu-link"><span class="nk-menu-text">Theo năm</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a th:href="@{/admin/char/charcate}" class="nk-menu-link"><span class="nk-menu-text">Theo loại</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a th:href="@{/admin/char/chartrak}" class="nk-menu-link"><span class="nk-menu-text">Theo thương hiệu</span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a th:href="@{/admin/char/charuser}" class="nk-menu-link"><span class="nk-menu-text">Theo khách hàng</span></a>
+                            </li>
+                        </ul><!-- .nk-menu-sub -->
+                    </li>
+                    <li class="nk-menu-item">
+                        <a th:href="@{/admin/post/list}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-article"></em></span>
+                            <span class="nk-menu-text">Quản lý bài viết</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a target="_blank"
+                        href="https://bot.fpt.ai/bot/30f7b8b9dcfa1cf19d1b63e93c3939c4/statistic" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-chat"></em></span>
+                            <span class="nk-menu-text">Chat bot</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a th:href="@{/admin/account/list}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-users-fill"></em></span>
+                            <span class="nk-menu-text">Quản lý tài khoản</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a th:href="@{/admin/authority}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-setting-fill"></em></span>
+                            <span class="nk-menu-text">Phân quyền</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                </ul><!-- .nk-menu -->
+            </div><!-- .nk-sidebar-menu -->
+        </div><!-- .nk-sidebar-content -->
+    </div><!-- .nk-sidebar-element -->
+</div>

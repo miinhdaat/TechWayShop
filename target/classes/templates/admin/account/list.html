@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/index :: dynamic(~{::main})}" lang="zxx"
+    class="js">
+
+<body class="nk-body bg-lighter npc-general has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <main>
+                            <div class="nk-content-inner">
+                                <div class="nk-content-body">
+                                    <div class="nk-block-head nk-block-head-sm">
+                                        <div class="nk-block-between">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">Danh sách tài khoản</h3>
+                                            </div><!-- .nk-block-head-content -->
+                                            <div class="nk-block-head-content">
+                                                <div class="toggle-wrap nk-block-tools-toggle">
+                                                    <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="more-options"><em class="icon ni ni-more-v"></em></a>
+                                                    <div class="toggle-expand-content" data-content="more-options">
+                                                        <ul class="nk-block-tools g-3">
+                                                            <li>
+                                                                <form method="post" th:action="@{/admin/account/findIdorName/1}">
+                                                                    <div class="form-control-wrap">
+                                                                        <div class="form-icon form-icon-right">
+                                                                            <em class="icon ni ni-search"></em>
+                                                                        </div>
+                                                                        <input name="keyword" type="text" class="form-control" id="default-04" placeholder="Search by name">
+                                                                    </div>
+                                                                </form>
+                                                            </li>
+                                                            <li class="nk-block-tools-opt">
+                                                                <a href="" data-toggle="modal"
+                                                                    data-target="#create"
+                                                                    class="toggle btn btn-icon btn-primary d-md-none"><em
+                                                                        class="icon ni ni-plus"></em></a>
+                                                                <a href="" data-toggle="modal"
+                                                                    data-target="#create"
+                                                                    class="toggle btn btn-primary d-none d-md-inline-flex"><em
+                                                                        class="icon ni ni-plus"></em><span>Thêm
+                                                                        mới</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-block-head-content -->
+                                        </div><!-- .nk-block-between -->
+                                        <i style="float: right; margin: 10px;">Hiển thị  [[${sizepro} ]]  tài khoản</i>
+                                    </div><!-- .nk-block-head -->
+                                    <div class="nk-block">
+                                        <div class="nk-tb-list is-separate mb-3">
+                                            <div class="nk-tb-item nk-tb-head">
+                                                <div class="nk-tb-col"><span class="sub-text">Tên đăng nhập</span></div>
+                                                <div class="nk-tb-col"><span class="sub-text">Họ tên và email</span></div>
+                                                <div class="nk-tb-col tb-col-md"><span class="sub-text">Phone</span></div>
+                                                <div class="nk-tb-col tb-col-md"><span class="sub-text">Status</span></div>
+                                                <div class="nk-tb-col nk-tb-col-tools">
+                                                    <ul class="nk-tb-actions gx-1 my-n1">
+                                                        <li>
+                                                            <div class="drodown">
+                                                                <a href="#" class="dropdown-toggle btn btn-icon btn-trigger mr-n1" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a href="#"><em class="icon ni ni-mail"></em><span>Send Email to All</span></a></li>
+                                                                        <li><a href="#"><em class="icon ni ni-na"></em><span>Suspend Selected</span></a></li>
+                                                                        <li><a href="#"><em class="icon ni ni-trash"></em><span>Remove Seleted</span></a></li>
+                                                                        <li><a href="#"><em class="icon ni ni-shield-star"></em><span>Reset Password</span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .nk-tb-item -->
+                                            <div class="nk-tb-item" th:each="acc,state:${items.pageList}">
+                                                <div class="nk-tb-col">[[${acc.username}]]</div>
+                                                <div class="nk-tb-col">
+                                                    <a href="">
+                                                        <div class="user-card">
+                                                            <div class="user-avatar">
+                                                                <img th:src="@{|/assets/images/client/${acc.photo}|}" alt="">
+                                                            </div>
+                                                            <div class="user-info">
+                                                                <span class="tb-lead">[[${acc.fullname}]]<span class="dot dot-success d-md-none ml-1"></span></span>
+                                                                <span>[[${acc.email}]]</span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-md">
+                                                    <span>[[${acc.phone}]]</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-md">
+                                                    <span th:if="${acc.active==true}" class="tb-status text-success">Đã kích hoạt</span>
+                                                    <span th:if="${acc.active==false}" class="tb-status text-danger">Chưa kích hoạt</span>
+                                                </div>
+                                                <div class="nk-tb-col nk-tb-col-tools">
+                                                    <ul class="nk-tb-actions gx-1">
+                                                        <li>
+                                                            <div class="drodown">
+                                                                <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a th:href="@{|/admin/account/edit?username=${acc.username}|}"><em class="icon ni ni-eye"></em><span>Chi tiết</span></a></li>
+                                                                    </ul>
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a th:href="@{|/admin/account/delete/${acc.username}|}"><em class="icon ni ni-trash"></em><span>Xoá</span></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .nk-tb-item -->
+                                        </div><!-- .nk-tb-list -->
+                                        <div class="card">
+                                            <div class="card-inner">
+                                                <div class="nk-block-between-md g-3">
+                                                    <div class="g">
+                                                        <ul
+                                                        class="pagination justify-content-center justify-content-md-start">
+                                                        <li
+                                                            th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+                                                            <a class="page-link" th:href="@{/admin/account/list}">
+                                                                <em class="icon ni ni-chevrons-left"></em></a>
+                                                        </li>
+                                                        <li
+                                                            th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' ">
+                                                            <a class="page-link"
+                                                                th:href="@{|${baseUrl}${currentIndex - 1}|}">
+                                                                <em class="icon ni ni-back-ios"></em></a>
+                                                        </li>
+
+                                                        <li th:if="${currentIndex - 2} > 0" class="page-item"><a
+                                                                class="page-link"
+                                                                th:href="@{|${baseUrl}${currentIndex - 2}|}"><span
+                                                                    aria-hidden="true">[[${currentIndex}
+                                                                    -2]]</span></a></li>
+
+                                                        <li th:if="${currentIndex - 1} != 0" class="page-item"><a
+                                                                class="page-link"
+                                                                th:href="@{|${baseUrl}${currentIndex - 1}|}"><span
+                                                                    aria-hidden="true">[[${currentIndex}
+                                                                    -1]]</span></a></li>
+
+                                                        <li class="page-item active"><a class="page-link"
+                                                                th:href="@{|${baseUrl}${currentIndex}|}"><span
+                                                                    aria-hidden="true">[[${currentIndex}]]</span></a>
+                                                        </li>
+
+                                                        <li th:if="${currentIndex +1} <= ${totalPageCount}"
+                                                            class="page-item"><a class="page-link"
+                                                                th:href="@{|${baseUrl}${currentIndex + 1}|}"><span
+                                                                    aria-hidden="true">[[${currentIndex}
+                                                                    +1]]</span></a></li>
+
+                                                        <li th:if="${currentIndex +2} <= ${totalPageCount}"
+                                                            class="page-item"><a class="page-link"
+                                                                th:href="@{|${baseUrl}${currentIndex + 2}|}"><span
+                                                                    aria-hidden="true">[[${currentIndex}
+                                                                    +2]]</span></a></li>
+
+                                                        <li
+                                                            th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'">
+                                                            <a class="page-link"
+                                                                th:href="@{|${baseUrl}${currentIndex + 1}|}">
+                                                                <em class="icon ni ni-forward-ios"></em></a>
+                                                        </li>
+                                                        <li
+                                                            th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+                                                            <a class="page-link"
+                                                                th:href="@{|${baseUrl}${totalPageCount}|}">
+                                                                <em class="icon ni ni-chevrons-right"></em></a>
+                                                        </li>
+                                                    </ul><!-- .pagination -->
+                                                    </div>
+                                                    
+                                                </div><!-- .nk-block-between -->
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-block -->
+
+                                    <div class="modal fade" tabindex="-1" role="dialog" id="create">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <a href="#" class="close" data-dismiss="modal"><em
+                                                        class="icon ni ni-cross-sm"></em></a>
+                                                <div class="modal-body modal-body-lg">
+                                                    <h5 class="title">Thêm sản phẩm mới</h5>
+                                                    <div class="tab-content">
+                                                        <form th:action="@{/admin/account/create}" method="post" modelAttribute="acc"
+                                                        enctype="multipart/form-data">
+                                                            <div class="row gy-4">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="idSP">Tên hiển thị *</label>
+                                                                        <input type="text" name="Username" th:value="${acc.Username}"
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Họ và tên *</label>
+                                                                        <input type="text" name="Fullname" th:value="${acc.Fullname}" required
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP"><i
+                                                                                readonly>Hình ảnh*</i></label>
+                                                                        <div class="custom-file">
+                                                                            <input type="hidden" name="Photo" th:value="${acc.Photo}">
+                                                                            <input type="file" name="photo_img" class="custom-file-input" id="customFile">
+                                                                            <label class="custom-file-label"
+                                                                                for="customFile">Chọn file</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Mật khẩu *</label>
+                                                                        <input type="password" name="Password" th:value="${acc.Password}" required
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Trạng
+                                                                            thái *</label>
+                                                                            <select class="form-control" name="active"
+                                                                                data-live-search="true" style="height: 36px;">
+                                                                                <option value="true">Đã kích hoạt</option>
+                                                                                <option value="false">Chưa kích hoạt</option>
+                                                                            </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Email *</label>
+                                                                        <input type="email" name="Email" th:value="${acc.Email}" required
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="nameSP">Số điện thoại *</label>
+                                                                        <input type="text" name="Phone" th:value="${acc.Phone}"
+                                                                            class="form-control form-control-lg">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <ul
+                                                                        class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                        <li>
+                                                                            <button type="submit"
+                                                                                class="btn btn-lg btn-primary">Thêm
+                                                                                mới</button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" data-dismiss="modal"
+                                                                                class="link link-light">Huỷ</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div><!-- .tab-content -->
+                                                </div><!-- .modal-body -->
+                                            </div><!-- .modal-content -->
+                                        </div><!-- .modal-dialog -->
+                                    </div><!-- .modal -->
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+</body>
+
+</html>

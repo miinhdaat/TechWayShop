@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/layout/index ::dynamic(~{::main})}">
+
+<main class="main mb-3">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/home/index}">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/product/list}">Cửa hàng</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Đăng nhập</li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
+        style="background: url('https://cdn.tgdd.vn/mwgcart/orderhistory/images/bg.png') transparent repeat center top;">
+        <div class="container">
+            <div class="form-box">
+                <div class="form-tab">
+                    <ul class="nav nav-pills nav-fill" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/security/login/form}">Đăng nhập</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/home/signup}">Đăng kí</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="signin-2" role="tabpanel"
+                            aria-labelledby="signin-tab-2">
+                            <div class="form-group text-center">
+                                <i class="text-danger" style="text-align: center;" th:text="${message}"></i>
+                            </div>
+                            <form th:action="@{/security/login}" method="post">
+                                <div class="form-group">
+                                    <label for="singin-email-2">Tên đăng nhập *</label>
+                                    <input type="text" class="form-control" id="singin-email-2" name="username"
+                                        required>
+                                </div>
+                                <!-- End .form-group -->
+
+                                <div class="form-group">
+                                    <label for="singin-password-2">Mật khẩu *</label>
+                                    <input type="password" class="form-control" id="singin-password-2" name="password"
+                                        required>
+                                </div>
+                                <!-- End .form-group -->
+
+                                <div class="form-footer">
+                                    <button type="submit" class="btn btn-outline-primary-2">
+                                        <span>Đăng nhập</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </button>
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="remeber-me"
+                                            id="remember">
+                                        <label class="custom-control-label" for="remember">Ghi nhớ</label>
+                                    </div>
+                                    <a th:href="@{/home/forgot}" class="forgot-link">Quên mật khẩu?</a>
+                                </div>
+                            </form>
+
+                            <div class="form-choice">
+                                <p class="text-center">Đăng nhập với</p>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <a href="/security2/authrization/google" class="btn btn-login btn-g">
+                                            <i class="icon-google"></i> Tài khoản Google
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="/security2/authrization/facebook" class="btn btn-login btn-f">
+                                            <i class="icon-facebook-f"></i> Tài khoản Facebook
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

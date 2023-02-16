@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="header-center">
+        <nav class="main-nav">
+            <ul class="menu sf-arrows">
+                <li class="megamenu-container active">
+                    <a th:href="@{/home/index}">Trang chủ</a>
+                </li>
+                <li>
+                    <a th:href="@{/product/list}">Cửa hàng</a>
+                </li>
+                <li>
+                    <a th:href="@{/post/list}" class="sf">Tin tức</a>
+                </li>
+                <li>
+                    <a th:href="@{/contact-us}" class="sf">Liên hệ</a>
+                </li>
+                <li>
+                    <a th:href="@{/about}" class="sf">Thông tin</a>
+                </li>
+                <th:block th:if="${#request.remoteUser}">
+                    <li>
+                        <a th:href="@{|/home/info?username=${#request.remoteUser}|}" class="sf">Tài khoản</a>
+                    </li>
+                </th:block>
+            </ul>
+        </nav>
+    </div>
+    <div class="header-right ">
+        <i class="la la-lightbulb-o "></i>
+        <p>Sale<span class="highlight ">&nbsp;Giảm giá đến 49%</span></p>
+    </div>
+</div>

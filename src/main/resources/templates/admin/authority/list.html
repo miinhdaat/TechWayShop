@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/index :: dynamic(~{::main})}" lang="zxx"
+    class="js">
+
+<body class="nk-body bg-lighter npc-general has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <main>
+                            <div class="nk-content-inner" ng-controller="authority">
+                                <div class="nk-content-body">
+                                    <div class="nk-block-head nk-block-head-sm">
+                                        <div class="nk-block-between">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">Phân quyền tài khoản</h3>
+                                            </div><!-- .nk-block-head-content -->
+                                            <div class="nk-block-head-content">
+                                                <div class="toggle-wrap nk-block-tools-toggle">
+                                                    <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1"
+                                                        data-target="more-options"><em
+                                                            class="icon ni ni-more-v"></em></a>
+                                                    <div class="toggle-expand-content" data-content="more-options">
+                                                        <ul class="nk-block-tools g-3">
+                                                            <li>
+                                                                <div class="form-control-wrap">
+                                                                    <form ng-submit="searchAcc()">
+                                                                        <div class="form-icon form-icon-right">
+                                                                            <em class="icon ni ni-search"></em>
+                                                                        </div>
+                                                                        <input id="searchKW" ng-model="searchKW" ng-change="searchAcc()" type="text"
+                                                                            class="form-control"
+                                                                            placeholder="Tìm kiếm....">
+                                                                    </form>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-block-head-content -->
+                                        </div><!-- .nk-block-between -->
+                                    </div><!-- .nk-block-head -->
+                                    <div class="nk-block">
+                                        <div class="nk-tb-list is-separate mb-3">
+                                            <div class="nk-tb-item nk-tb-head">
+                                                <div class="nk-tb-col"><span>Tên tài khoản</span></div>
+                                                <div class="nk-tb-col tb-col-sm"><span>Họ và tên</span></div>
+                                                <div class="nk-tb-col tb-col-sm text-center"><span>Khách hàng</span></div>
+                                                <div class="nk-tb-col tb-col-sm text-center"><span>Quản lý</span></div>
+                                                <div class="nk-tb-col tb-col-sm text-center"><span>Nhân viên</span></div>
+                                            </div><!-- .nk-tb-item -->
+                                            <div class="nk-tb-item" ng-repeat="acc in pager.admins">
+                                                <div class="nk-tb-col">
+                                                    <span class="tb-sub">{{acc.username}}</span>
+                                                </div>
+                                                <div class="nk-tb-col">
+                                                    <span class="title">{{acc.fullname}}</span>
+                                                </div>
+                                                
+                                                <div class="nk-tb-col text-center" ng-repeat="role in roles">
+                                                    <input ng-checked="authority_of(acc,role)" ng-click="authority_changed(acc,role)" type="checkbox">
+                                                </div>
+                                            </div>
+                                        </div><!-- .nk-tb-list -->
+                                        <div class="card">
+                                            <div class="card-inner">
+                                                <div class="nk-block-between-md g-3">
+                                                    <div class="g">
+                                                        <ul
+                                                            class="pagination justify-content-center justify-content-md-start">
+                                                            <li class="page-item"><a class="page-link" href=""
+                                                                    ng-click="pager.first()"><em
+                                                                        class="icon ni ni-chevrons-left"></em></a></li>
+                                                            <li class="page-item"><a class="page-link" href=""
+                                                                    ng-click="pager.prev()"><em
+                                                                        class="icon ni ni-back-ios"></em></a></li>
+                                                            <li class="page-item"><a class="page-link"
+                                                                    href="">{{pager.page + 1}} of
+                                                                    {{pager.count}}</a></li>
+                                                            <li class="page-item"><a class="page-link" href=""
+                                                                    ng-click="pager.next()"><em
+                                                                        class="icon ni ni-forward-ios"></em></a></li>
+                                                            <li class="page-item"><a class="page-link" href=""
+                                                                    ng-click="pager.last()"><em
+                                                                        class="icon ni ni-chevrons-right"></em></a></li>
+                                                        </ul>
+                                                        <!-- .pagination -->
+                                                    </div>
+
+                                                </div><!-- .nk-block-between -->
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-block -->
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+</body>
+
+</html>

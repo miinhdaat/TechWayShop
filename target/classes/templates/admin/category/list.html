@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/index :: dynamic(~{::main})}" lang="zxx"
+    class="js">
+
+<body class="nk-body bg-lighter npc-general has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <main ng-app="admin-ctrl">
+                            <div class="nk-content-inner" ng-controller="category-ctrl">
+                                <div class="nk-content-body">
+                                    <div class="nk-block-head nk-block-head-sm">
+                                        <div class="nk-block-between">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">Loại danh mục</h3>
+                                            </div>
+                                            <!-- .nk-block-head-content -->
+                                            <div class="nk-block-head-content">
+                                                <div class="toggle-wrap nk-block-tools-toggle">
+                                                    <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1"
+                                                        data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                                    <div class="toggle-expand-content" data-content="pageMenu">
+                                                        <ul class="nk-block-tools g-3">
+                                                            <li>
+                                                                <div class="form-control-wrap">
+                                                                    <form ng-submit="search()">
+                                                                        <div class="form-icon form-icon-right">
+                                                                            <em class="icon ni ni-search"></em>
+                                                                        </div>
+                                                                        <input id="searchName" ng-model="searchName" ng-change="search()" type="text"
+                                                                            class="form-control"
+                                                                            placeholder="Tìm danh mục nào đó....">
+                                                                    </form>
+                                                                </div>
+                                                            </li>
+                                                            <li class="nk-block-tools-opt">
+                                                                <a href="" ng-click="addModal()"
+                                                                    class="toggle btn btn-icon btn-primary d-md-none"><em
+                                                                        class="icon ni ni-plus"></em></a>
+                                                                <a href="" ng-click="addModal()"
+                                                                    class="toggle btn btn-primary d-none d-md-inline-flex"><em
+                                                                        class="icon ni ni-plus"></em><span>Thêm
+                                                                        mới</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-block-head-content -->
+                                        </div><!-- .nk-block-between -->
+                                    </div><!-- .nk-block-head -->
+                                    <div class="nk-block">
+                                        <div class="nk-tb-list is-separate mb-3">
+                                            <div class="nk-tb-item nk-tb-head">
+                                                <div class="nk-tb-col"><span>Mã</span></div>
+                                                <div class="nk-tb-col tb-col-sm"><span>Tên danh mục</span></div>
+                                                <div class="nk-tb-col tb-col-sm"><span>Thông tin thêm</span></div>
+                                                <div class="nk-tb-col nk-tb-col-tools"></div>
+                                            </div><!-- .nk-tb-item -->
+                                            <div class="nk-tb-item" ng-repeat="item in pager.items">
+                                                <div class="nk-tb-col">
+                                                    <span class="tb-sub">{{item.category_id}}</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-sm">
+                                                    <span class="tb-product">
+                                                        <span class="title">{{item.name}}</span>
+                                                    </span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-sm w-50">
+                                                    <span class="tb-product">
+                                                        <span class="title">{{item.detail}}</span>
+                                                    </span>
+                                                </div>
+                                                <div class="nk-tb-col nk-tb-col-tools">
+                                                    <ul class="nk-tb-actions gx-1 my-n1">
+                                                        <li class="mr-n1">
+                                                            <div class="dropdown">
+                                                                <a href="#"
+                                                                    class="dropdown-toggle btn btn-icon btn-trigger"
+                                                                    data-toggle="dropdown"><em
+                                                                        class="icon ni ni-more-h"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <ul class="link-list-opt no-bdr">
+                                                                        <li><a href="" ng-click="edit(item)"><em class="icon ni ni-edit"></em><span>Cập nhật danh mục</span></a></li>
+                                                                        <li><a href="" ng-click="delete(item)"><em class="icon ni ni-trash"></em><span>Xoá danh mục</a></span></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <!-- .nk-tb-item -->
+                                        </div><!-- .nk-tb-list -->
+                                        <div class="card">
+                                            <div class="card-inner">
+                                                <div class="nk-block-between-md g-3">
+                                                    <div class="g">
+                                                        <ul
+                                                            class="pagination justify-content-center justify-content-md-start">
+                                                            <li class="page-item"><a class="page-link" href=""
+                                                                    ng-click="pager.first()"><em
+                                                                        class="icon ni ni-chevrons-left"></em></a></li>
+                                                            <li class="page-item"><a class="page-link" href=""
+                                                                    ng-click="pager.prev()"><em
+                                                                        class="icon ni ni-back-ios"></em></a></li>
+                                                            <li class="page-item"><a class="page-link"
+                                                                    href="">{{pager.page + 1}} of
+                                                                    {{pager.count}}</a></li>
+                                                            <li class="page-item"><a class="page-link" href=""
+                                                                    ng-click="pager.next()"><em
+                                                                        class="icon ni ni-forward-ios"></em></a></li>
+                                                            <li class="page-item"><a class="page-link" href=""
+                                                                    ng-click="pager.last()"><em
+                                                                        class="icon ni ni-chevrons-right"></em></a></li>
+                                                        </ul>
+                                                        <!-- .pagination -->
+                                                    </div>
+                                                </div><!-- .nk-block-between -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" tabindex="-1" role="dialog" id="update-cate">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <a href="#" class="close" data-dismiss="modal"><em
+                                                    class="icon ni ni-cross-sm"></em></a>
+                                            <div class="modal-body modal-body-lg">
+                                                <h5 class="title" id="title"></h5>
+                                                <div class="tab-content">
+                                                    <form action="">
+                                                        <div class="row gy-4">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="idSP">Mã danh mục
+                                                                        *</label>
+                                                                    <input type="text" ng-model="form.category_id" readonly
+                                                                        class="form-control form-control-lg">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="nameSP">Tên danh mục *</label>
+                                                                    <input type="text" ng-model="form.name" required
+                                                                        class="form-control form-control-lg">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-12">
+                                                                <div class="form-group">
+                                                                    <label class="form-label" for="nameSP">Thông tin thêm
+                                                                        *</label>
+                                                                    <textarea type="text" cols="7" rows="3"
+                                                                    ng-model="form.detail" id="story" name="story" required
+                                                                        class="form-control form-control-lg"></textarea>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-12">
+                                                                <ul
+                                                                    class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2" style="float: left;">
+                                                                    <li style="float: left;">
+                                                                        <button id="themmoi" ng-click="create()" class="btn btn-lg btn-primary">Thêm mới</button>
+                                                                    </li>
+                                                                </ul>
+                                                                <ul
+                                                                    class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2" style="float: right;">
+                                                                    <li>
+                                                                        <button id="capnhat" ng-click="update()" class="btn btn-lg btn-warning">Cập nhật</button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#" data-dismiss="modal"
+                                                                            class="btn btn-lg btn-danger">Huỷ</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div><!-- .tab-content -->
+                                            </div><!-- .modal-body -->
+                                        </div><!-- .modal-content -->
+                                    </div><!-- .modal-dialog -->
+                                </div><!-- .modal -->
+                            </div>
+                        </main>
+                    </div>
+                </div>
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+</body>
+
+</html>

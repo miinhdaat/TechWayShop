@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(main)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TechWay Shop</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/HASicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icons/HASicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/icons/HASicon.png">
+    <link rel="mask-icon" href="/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/assets/images/icons/HASicon.ico">
+    <meta name="apple-mobile-web-app-title" content="HAS">
+    <meta name="application-name" content="HAS">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/plugins/jquery.countdown.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/skins/skin-demo-4.css">
+    <link rel="stylesheet" href="/assets/css/demos/demo-4.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+
+<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+    <div class="page-wrapper">
+        <header class="header header-intro-clearance header-4">
+            <div class="header-top">
+                <div th:replace="user/layout/_header_top.html"></div>
+            </div>
+
+            <div class="header-middle">
+                <div th:replace="user/layout/_header_middle.html"></div>
+            </div>
+
+            <div class="header-bottom sticky-header">
+                <div th:replace="user/layout/_header_bottom.html"></div>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="intro-slider-container mb-5">
+                <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
+                    data-owl-options='{
+                        "dots": true,
+                        "nav": false, 
+                        "responsive": {
+                            "1200": {
+                                "nav": true,
+                                "dots": false
+                            }
+                        }
+                    }'>
+                    <div class="intro-slide" style="background-image: url(/assets/images/banners/b2.jpg);">
+                        <div class="container intro-content">
+                            <div class=" ">
+                                <div class="hh1">
+                                    <h3 class="intro-subtitle text-third">Ưu đãi và khuyến mãi</h3>
+                                    <h1 class="intro-title">Với quạt hơi nước </h1>
+                                    <h1 class="intro-title"> Saiko</h1>
+                                    <div class="intro-price">
+                                        <sup class="intro-old-price">7,900,000 VND</sup>
+                                        <span class="text-third">
+                                            6,099,990 VND<sup> </sup>
+                                        </span>
+                                    </div>
+
+                                    <a href="" class="btn btn-primary btn-round">
+                                        <span>Xem thêm</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="intro-slide" style="background-image: url(/assets/images/banners/b4.png);">
+                        <div class="container intro-content">
+                            <div class="row justify-content-end">
+                                <div class="col-auto col-sm-7 col-md-6 col-lg-5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="slider-loader"></span>
+            </div>
+
+            <div class="bg-light pt-5 pb-6">
+                <div class="container trending-products">
+                    <div class="heading heading-center mb-3 mx-auto">
+                        <div class="heading-center">
+                            <h2 class="title">CÁC SẢN PHẨM MỚI</h2>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4-5col">
+                        <div class="tab-content tab-content-carousel just-action-icons-sm">
+                            <div class="tab-pane p-0 fade show active" id="trending-top-tab" role="tabpanel"
+                                aria-labelledby="trending-top-link">
+                                <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
+                                    data-toggle="owl" data-owl-options='{
+                                            "nav": true, 
+                                            "dots": false,
+                                            "margin": 20,
+                                            "loop": false,
+                                            "responsive": {
+                                                "0": {
+                                                    "items":2
+                                                },
+                                                "480": {
+                                                    "items":2
+                                                },
+                                                "768": {
+                                                    "items":3
+                                                },
+                                                "992": {
+                                                    "items":5   
+                                                }
+                                            }
+                                        }'>
+
+
+
+                                    <div class="product product-2" th:each="l:${item3}">
+                                        <span class="product-label label-circle label-new">New</span>
+
+                                        <span class="sale-label label-sale" th:if="${l.distcount} > 0">
+                                            <i class="bi bi-lightning"></i> Giảm [[${#numbers.formatDecimal(l.distcount,
+                                            1 , 'COMMA',0,'POINT')}]] %
+                                        </span>
+
+                                        <figure class="product-media">
+                                            <a th:href="@{|/product/detail/${l.product_id}|}">
+                                                <img th:src="@{|/assets/images/products/${l.image1}|}"
+                                                    alt="Product image" class="product-image">
+                                            </a>
+
+                                            <div class="product-action-vertical">
+                                                <a href="" th:attr="ng-click=@{|addFavo(${l.product_id})|}" class="btn-product-icon btn-wishlist"
+                                                    title="Add to wishlist"></a>
+                                            </div>
+                                        </figure>
+
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><span th:utext="${l.category.name}"></span></a>
+                                            </div>
+                                            <h3 class="product-title"><a
+                                                    th:href="@{|/product/detail/${l.product_id}|}"><span
+                                                        th:utext="${l.name}"></span></a></h3>
+                                            <div class="product-price">
+                                                [[${#numbers.formatDecimal(l.unit_price, 3 , 'COMMA',0,'POINT')} ]] Đ
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4 "></div>
+
+            <div class="container ">
+                <h2 class="title text-center mb-4 mb-55 ">SẢN PHẨM HOT</h2>
+                <div th:replace="user/home/_banner.html"></div>
+            </div>
+
+            <div class="mb-6"></div>
+
+            <div class="container">
+                <div class="heading text-center mb-3">
+                    <h2 class="title">SIÊU KHUYẾN MÃI</h2>
+                </div>
+                <div class="i-2">
+                    <div class="container">
+                        <div class="wraper">
+                            <div class="left">
+                                <div class="image1">
+                                    <a href="#"> <img src="/assets/images/banners/icon12.png" alt="" /></a>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="item">
+                                    <div class="image1">
+                                        <a href="#"><img src="/assets/images/banners/icon13.png" alt="" /></a>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="image1">
+                                        <a href="#"><img src="/assets/images/banners/icon14.png" alt="" /></a>
+                                    </div>
+                                </div>
+                                <div class="item1">
+                                    <div class="image1">
+                                        <a href="#"><img src="/assets/images/banners/icon15.png" alt="" /></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-light pt-3 pb-3 mb-3">
+                <div class="container trending-products">
+                    <div class="heading heading-center mb-3 mx-auto">
+                        <div class="heading-center">
+                            <h2 class="title">SẢN PHẨM ĐẶC BIỆT</h2>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4-5col">
+                        <div class="tab-content tab-content-carousel just-action-icons-sm">
+                            <div class="tab-pane p-0 fade show active" id="trending-top-tab" role="tabpanel"
+                                aria-labelledby="trending-top-link">
+                                <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
+                                    data-toggle="owl" data-owl-options='{
+                                            "nav": true, 
+                                            "dots": false,
+                                            "margin": 20,
+                                            "loop": false,
+                                            "responsive": {
+                                                "0": {
+                                                    "items":2
+                                                },
+                                                "480": {
+                                                    "items":2
+                                                },
+                                                "768": {
+                                                    "items":3
+                                                },
+                                                "992": {
+                                                    "items":5   
+                                                }
+                                            }
+                                        }'>
+
+
+
+                                    <div class="product product-2" th:each="l:${item2}">
+                                        <span class="product-label label-circle label-new">New</span>
+
+                                        <span class="sale-label label-sale" th:if="${l.distcount} > 0">
+                                            <i class="bi bi-lightning"></i> Giảm [[${#numbers.formatDecimal(l.distcount,
+                                            1 , 'COMMA',0,'POINT')}]] %
+                                        </span>
+
+                                        <figure class="product-media">
+                                            <a th:href="@{|/product/detail/${l.product_id}|}">
+                                                <img th:src="@{|/assets/images/products/${l.image1}|}"
+                                                    alt="Product image" class="product-image">
+                                            </a>
+
+                                            <div class="product-action-vertical">
+                                                <a href="" th:attr="ng-click=@{|addFavo(${l.product_id})|}" class="btn-product-icon btn-wishlist"
+                                                    title="Add to wishlist"></a>
+                                            </div>
+                                        </figure>
+
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><span th:utext="${l.category.name}"></span></a>
+                                            </div>
+                                            <h3 class="product-title"><a
+                                                    th:href="@{|/product/detail/${l.product_id}|}"><span
+                                                        th:utext="${l.name}"></span></a></h3>
+                                            <div class="product-price">
+                                                [[${#numbers.formatDecimal(l.unit_price, 3 , 'COMMA',0,'POINT')} ]] Đ
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="heading text-center mb-3">
+                    <h2 class="title">ƯU ĐÃI</h2>
+                    <p class="title-desc">Hôm nay và các sản phẩm khác</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 deal-col">
+                        <div class="deal" style="background-image: url('/assets/images/banners/i13.jpg');">
+                            <div class="deal-top">
+                                <h2>Ưu đãi trong ngày</h2>
+                                <h4>Sản phẩm có giới hạn </h4>
+                            </div>
+
+                            <div class="deal-content">
+                                <h3 class="product-title"><a href="">Nồi nhôm oxy hoá mềm 28 cm Supor HT08008-8</a></h3>
+                                <div class="product-price">
+                                    <span class="new-price">512.000 VND</span>
+                                    <span class="old-price">Còn 399.000 VND</span>
+                                </div>
+                                <a href="" class="btn btn-link"><span>Xem thêm</span><i
+                                        class="icon-long-arrow-right"></i></a>
+                            </div>
+
+                            <div class="deal-bottom">
+                                <div class="deal-countdown daily-deal-countdown" data-until="+10h"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 deal-col">
+                        <div class="deal" style="background-image: url('/assets/images/banners/i14,1.jpg');">
+                            <div class="deal-top">
+                                <h2>Ưu đãi duy nhất</h2>
+                                <h4>Đăng nhập để mua sản phẩm</h4>
+                            </div>
+
+                            <div class="deal-content">
+                                <h3 class="product-title"><a href="">Bộ 3 nồi inox 5 đáy nắp kính Hommy BE005 </a></h3>
+                                <div class="product-price">
+                                    <span class="new-price">630.000 VND</span>
+                                </div>
+                                <a href="" class="btn btn-link"><span>Xem thêm</span><i
+                                        class="icon-long-arrow-right"></i></a>
+                            </div>
+
+                            <div class="deal-bottom">
+                                <div class="deal-countdown offer-countdown" data-until="+11d"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bg-light pt-5 pb-6">
+                <div class="container trending-products">
+                    <div class="heading heading-flex mb-3">
+                        <div class="heading-left">
+                            <h2 class="title">SẢN PHẨM KHUYẾN MÃI</h2>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4-5col">
+                        <div class="tab-content tab-content-carousel just-action-icons-sm">
+                            <div class="tab-pane p-0 fade show active" id="trending-top-tab" role="tabpanel"
+                                aria-labelledby="trending-top-link">
+                                <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
+                                    data-toggle="owl" data-owl-options='{
+                                            "nav": true, 
+                                            "dots": false,
+                                            "margin": 20,
+                                            "loop": false,
+                                            "responsive": {
+                                                "0": {
+                                                    "items":2
+                                                },
+                                                "480": {
+                                                    "items":2
+                                                },
+                                                "768": {
+                                                    "items":3
+                                                },
+                                                "992": {
+                                                    "items":5   
+                                                }
+                                            }
+                                        }'>
+
+
+                                    <div class="product product-2" th:each="d:${item1}">
+                                        <figure class="product-media">
+                                            <span class="product-label label-new"
+                                                th:if="${d.lastest} == true">New</span>
+
+                                            <span class="sale-label label-sale" th:if="${d.distcount} > 0">
+                                                <i class="bi bi-lightning"></i> Giảm
+                                                [[${#numbers.formatDecimal(d.distcount, 1 , 'COMMA',0,'POINT')}]] %
+                                            </span>
+
+                                            <a th:href="@{|/product/detail/${d.product_id}|}">
+                                                <img th:src="@{|/assets/images/products/${d.image1}|}"
+                                                    alt="Product image" class="product-image">
+                                            </a>
+
+                                            <div class="product-action-vertical">
+                                                <a href="" th:attr="ng-click=@{|addFavo(${d.product_id})|}" class="btn-product-icon btn-wishlist"
+                                                    title="Add to wishlist"></a>
+                                            </div>
+                                        </figure>
+
+                                        <div class="product-body">
+                                            <div class="product-cat">
+                                                <a href="#"><span th:utext="${d.category.name}"></span></a>
+                                            </div>
+                                            <h3 class="product-title"><a
+                                                    th:href="@{|/product/detail/${d.product_id}|}"><span
+                                                        th:utext="${d.name}"></span></a></h3>
+                                            <div class="product-price">
+                                                [[${#numbers.formatDecimal(d.unit_price, 3 , 'COMMA',0,'POINT')} ]] Đ
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-5"></div>
+
+            <div class="mb-4"></div>
+
+            <div class="container">
+                <hr class="mb-0">
+            </div>
+
+            <div class="icon-boxes-container bg-transparent">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-rocket"></i>
+                                </span>
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Miễn phí giao hàng </h3>
+                                    <p>Khi mua trên 5 sản phẩm</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-rotate-left"></i>
+                                </span>
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Trả hàng miễn phí</h3>
+                                    <p>Trong 30 ngày</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-info-circle"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Giảm giá 20% cho 1 sản phẩm</h3>
+                                    <p>Khi bạn đăng kí</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-life-ring"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Chúng tôi luôn hỗ trợ</h3>
+                                    <p>Dịch vụ khách hàng 24/7</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div th:replace="user/layout/_footer.html"></div>
+    </div>
+
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+    <div class="mobile-menu-overlay"></div>
+<script>
+
+              let __protocol = document.location.protocol;
+              let __baseUrl = __protocol + '//livechat.fpt.ai/v35/src';
+
+              let prefixNameLiveChat = 'Home Appliances Store';
+              let objPreDefineLiveChat = {
+                      appCode: '30f7b8b9dcfa1cf19d1b63e93c3939c4',
+                      themes: '',
+                      appName: prefixNameLiveChat ? prefixNameLiveChat : 'Live support',
+                      thumb: '',
+                      icon_bot: ''
+                  },
+                  appCodeHash = window.location.hash.substr(1);
+              if (appCodeHash.length == 32) {
+                  objPreDefineLiveChat.appCode = appCodeHash;
+              }
+
+              let fpt_ai_livechat_script = document.createElement('script');
+              fpt_ai_livechat_script.id = 'fpt_ai_livechat_script';
+              fpt_ai_livechat_script.src = __baseUrl + '/static/fptai-livechat.js';
+              document.body.appendChild(fpt_ai_livechat_script);
+
+              let fpt_ai_livechat_stylesheet = document.createElement('link');
+              fpt_ai_livechat_stylesheet.id = 'fpt_ai_livechat_script';
+              fpt_ai_livechat_stylesheet.rel = 'stylesheet';
+              fpt_ai_livechat_stylesheet.href = __baseUrl + '/static/fptai-livechat.css';
+              document.body.appendChild(fpt_ai_livechat_stylesheet);
+
+              fpt_ai_livechat_script.onload = function () {
+                  fpt_ai_render_chatbox(objPreDefineLiveChat, __baseUrl, 'livechat.fpt.ai:443');
+              }
+            </script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/assets/js/superfish.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/bootstrap-input-spinner.js"></script>
+    <script src="/assets/js/jquery.plugin.min.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="/assets/js/jquery.countdown.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/demos/demo-4.js"></script>
+    <script src="/assets/js/shopping-cart-app.js"></script>
+</body>
+
+</html>

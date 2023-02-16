@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/index :: dynamic(~{::main})}" lang="zxx"
+    class="js">
+
+<body class="nk-body bg-lighter npc-general has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <main>
+                        <div class="container-fluid">
+                            <div class="nk-content-inner">
+                                <div class="nk-content-body">
+                                    <div class="nk-block-head nk-block-head-sm">
+                                        <div class="nk-block-between">
+                                            <div class="nk-block-head-content">
+                                                <h3 class="nk-block-title page-title">Orders</h3>
+                                            </div><!-- .nk-block-head-content -->
+                                            <div class="nk-block-head-content">
+                                                <div class="toggle-wrap nk-block-tools-toggle">
+                                                    <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1"
+                                                        data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                                    <div class="toggle-expand-content" data-content="pageMenu">
+                                                        <ul class="nk-block-tools g-3">
+                                                            <li>
+                                                                <form method="post"
+                                                                    th:action="@{/admin/order/findbyOrderId/1}">
+                                                                    <div class="form-control-wrap">
+                                                                        <div class="form-icon form-icon-right">
+                                                                            <em class="icon ni ni-search"></em>
+                                                                        </div>
+                                                                        <input name="order_id" type="text"
+                                                                            class="form-control" id="default-04"
+                                                                            placeholder="Tìm theo mã đơn ...">
+                                                                    </div>
+                                                                </form>
+                                                            </li>
+                                                            <li class="nk-block-tools-opt">
+                                                                <a href="" data-target="modal_search"
+                                                                    class="toggle btn btn-icon btn-primary d-md-none"><em
+                                                                        class="icon ni ni-search"></em></a>
+                                                                <a href="" data-target="modal_search"
+                                                                    class="toggle btn btn-primary d-none d-md-inline-flex"><em
+                                                                        class="icon ni ni-search"></em><span>Tìm kiếm
+                                                                        nâng cao</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-block-head-content -->
+                                        </div><!-- .nk-block-between -->
+
+                                        <i th:utext="${message}"></i>
+                                        <i style="float: right; margin: 10px;">Tổng [[${sizepro} ]] đơn hàng </i>
+                                    </div><!-- .nk-block-head -->
+                                    <div class="nk-block">
+                                        <div class="nk-tb-list is-separate is-medium mb-3">
+                                            <div class="nk-tb-item nk-tb-head">
+                                                <div class="nk-tb-col"><span>Mã</span></div>
+                                                <div class="nk-tb-col tb-col-md"><span>Ngày đặt</span></div>
+                                                <div class="nk-tb-col"><span class="d-none d-mb-block">Trạng thái</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-sm"><span>Người đặt</span></div>
+                                                <div class="nk-tb-col tb-col-sm"><span>Số điện thoại</span></div>
+                                                <div class="nk-tb-col tb-col-md"><span>Phương thức trả</span></div>
+                                                <div class="nk-tb-col"><span>Tổng tiền</span></div>
+                                                <div class="nk-tb-col nk-tb-col-tools"></div>
+                                            </div><!-- .nk-tb-item -->
+                                            <div class="nk-tb-item" th:each="o,state:${items.pageList}">
+                                                <div class="nk-tb-col">
+                                                    <span class="tb-lead"><a href="#">#[[${o.Order_id}]]</a></span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-md">
+                                                    <span class="tb-sub">[[${o.CreateDate}]]</span>
+                                                </div>
+                                                <div class="nk-tb-col">
+                                                    <span class="dot bg-warning d-mb-none"></span>
+                                                    <span th:if="${o.status==0}"
+                                                        class="badge badge-sm badge-dot has-bg badge-warning d-none d-mb-inline-flex">Đang
+                                                        xử lý</span>
+                                                    <span th:if="${o.status==1}"
+                                                        class="badge badge-sm badge-dot has-bg badge-warning d-none d-mb-inline-flex">Đang
+                                                        giao hàng</span>
+                                                    <span th:if="${o.status==3}"
+                                                        class="badge badge-sm badge-dot has-bg badge-success d-none d-mb-inline-flex">Đã
+                                                        hoàn thành</span>
+                                                    <span th:if="${o.status==2}"
+                                                        class="badge badge-sm badge-dot has-bg badge-danger d-none d-mb-inline-flex">Hủy
+                                                        giao hàng</span>
+                                                    <span th:if="${o.status==4}"
+                                                        class="badge badge-sm badge-dot has-bg badge-danger d-none d-mb-inline-flex">Đã
+                                                        huỷ</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-sm">
+                                                    <span class="tb-sub">[[${o.account.Fullname}]]</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-sm">
+                                                    <span class="tb-sub">[[${o.Phone}]]</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-md">
+                                                    <span class="tb-sub text-primary">[[${o.method}]]</span>
+                                                </div>
+                                                <div class="nk-tb-col">
+                                                    <span class="tb-lead">[[${#numbers.formatDecimal(o.price , 3 ,
+                                                        'COMMA',2,'POINT')}]] Đ</span>
+                                                </div>
+                                                <div class="nk-tb-col nk-tb-col-tools">
+                                                    <ul class="nk-tb-actions gx-1">
+                                                        <li class="nk-tb-action-hidden">
+                                                            <a th:href="@{|/admin/order/edit?order_id=${o.Order_id}|}"
+                                                                class="btn btn-icon btn-trigger btn-tooltip"
+                                                                title="View Order"><em class="icon ni ni-eye"></em>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .nk-tb-item -->
+                                        </div><!-- .nk-tb-list -->
+
+                                        <div class="nk-add-product toggle-slide toggle-slide-right"
+                                            data-content="modal_search" data-toggle-screen="any"
+                                            data-toggle-overlay="true" data-toggle-body="true" data-simplebar>
+                                            <div class="nk-block-head">
+                                                <div class="nk-block-head-content">
+                                                    <h5 class="nk-block-title">Tìm kiếm</h5>
+                                                    <div class="nk-block-des">
+                                                        <p>Công cụ tìm kiếm nâng cao.</p>
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-block-head -->
+                                            <div class="nk-block">
+                                                <form th:action="@{/admin/order/findByAllkeyword/1}">
+                                                    <div class="row g-3">
+
+                                                        <div class="col-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="product-title">Trạng thái
+                                                                    đơn hàng</label>
+                                                                <select class="form-control" name="Status"
+                                                                    data-live-search="true" style="height: 36px;">
+                                                                    <option style="color: #00008B;" value="">Tất cả
+                                                                    </option>
+                                                                    <option style="color: #FFD700;" value="0">Đang xử
+                                                                        lý</option>
+                                                                    <option style="color: #01008B;" value="1">Đang
+                                                                        giao hàng</option>
+                                                                    <option style="color: #2E8B57;" value="3">Đã hoàn
+                                                                        thành </option>
+                                                                    <option style="color: #DC143C;" value="2">Hủy giao
+                                                                        hàng
+                                                                    </option>
+                                                                    <option style="color: #DC143C;" value="4">Đã hủy
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-mb-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="regular-price">Khách
+                                                                    hàng</label>
+                                                                <div class="form-control-wrap">
+                                                                    <input type="text" class="form-control"
+                                                                        name="Username">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-mb-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="sale-price">Số điện
+                                                                    thoại</label>
+                                                                <div class="form-control-wrap">
+                                                                    <input type="text" class="form-control"
+                                                                        name="Phone">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-mb-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="regular-price">Từ
+                                                                    ngày</label>
+                                                                <div class="form-control-wrap">
+                                                                    <input type="date" pattern="yyyy-MM-dd"
+                                                                        name="Minday" class="form-control"
+                                                                        id="regular-price">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-mb-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="sale-price">Đến
+                                                                    ngày</label>
+                                                                <div class="form-control-wrap">
+                                                                    <input type="date" pattern="yyyy-MM-dd"
+                                                                        name="Maxday" class="form-control"
+                                                                        id="sale-price">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group" data-select2-id="13">
+                                                                <label class="form-label" for="2">Từ giá </label>
+                                                                <select class="form-control" name="MinPrice"
+                                                                    data-live-search="true" style="height: 36px;">
+                                                                    <option value="0">Tất cả</option>
+                                                                    <option value="1000000">1,000,000 Đ</option>
+                                                                    <option value="2000000">2,000,000 Đ</option>
+                                                                    <option value="5000000">5,000,000 Đ </option>
+                                                                    <option value="10000000">10,000,000 Đ</option>
+                                                                    <option value="15000000">15,000,000 Đ</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="1">Đến giá </label>
+                                                                <select class="form-control" name="MaxPrice"
+                                                                    data-live-search="true" style="height: 36px;">
+                                                                    <option value="1000000000">Tất cả</option>
+                                                                    <option value="2000000">2,000,000 Đ</option>
+                                                                    <option value="5000000">5,000,000 Đ</option>
+                                                                    <option value="10000000">10,000,000 Đ</option>
+                                                                    <option value="15000000">15,000,000 Đ</option>
+                                                                    <option value="50000000">50,000,000 Đ</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn btn-primary"><em
+                                                                    class="icon ni ni-search"></em><span>Tìm
+                                                                    kiếm</span></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div><!-- .nk-block -->
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-inner">
+                                                <div class="nk-block-between-md g-3">
+                                                    <div class="g">
+                                                        <ul
+                                                            class="pagination justify-content-center justify-content-md-start">
+                                                            <li
+                                                                th:class="${currentIndex == 1}? 'page-item disabled' : 'page-item'">
+                                                                <a class="page-link" th:href="@{/admin/order/list}">
+                                                                    <em class="icon ni ni-chevrons-left"></em></a>
+                                                            </li>
+                                                            <li
+                                                                th:class="${currentIndex == 1}? 'page-item disabled': 'page-item' ">
+                                                                <a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex - 1}|}">
+                                                                    <em class="icon ni ni-back-ios"></em></a>
+                                                            </li>
+
+                                                            <li th:if="${currentIndex - 2} > 0" class="page-item"><a
+                                                                    class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex - 2}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}
+                                                                        -2]]</span></a></li>
+
+                                                            <li th:if="${currentIndex - 1} != 0" class="page-item"><a
+                                                                    class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex - 1}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}
+                                                                        -1]]</span></a></li>
+
+                                                            <li class="page-item active"><a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}]]</span></a>
+                                                            </li>
+
+                                                            <li th:if="${currentIndex +1} <= ${totalPageCount}"
+                                                                class="page-item"><a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex + 1}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}
+                                                                        +1]]</span></a></li>
+
+                                                            <li th:if="${currentIndex +2} <= ${totalPageCount}"
+                                                                class="page-item"><a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex + 2}|}"><span
+                                                                        aria-hidden="true">[[${currentIndex}
+                                                                        +2]]</span></a></li>
+
+                                                            <li
+                                                                th:class="${currentIndex == totalPageCount}? 'page-item disabled': 'page-item'">
+                                                                <a class="page-link"
+                                                                    th:href="@{|${baseUrl}${currentIndex + 1}|}">
+                                                                    <em class="icon ni ni-forward-ios"></em></a>
+                                                            </li>
+                                                            <li
+                                                                th:class="${currentIndex == totalPageCount}? 'page-item disabled':'page-item'">
+                                                                <a class="page-link"
+                                                                    th:href="@{|${baseUrl}${totalPageCount}|}">
+                                                                    <em class="icon ni ni-chevrons-right"></em></a>
+                                                            </li>
+                                                        </ul><!-- .pagination -->
+                                                    </div>
+                                                </div><!-- .nk-block-between -->
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-block -->
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+</body>
+
+</html>

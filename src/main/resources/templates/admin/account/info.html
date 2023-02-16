@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/index :: dynamic(~{::main})}" lang="zxx"
+    class="js">
+
+<body class="nk-body bg-lighter npc-general has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <main>
+                            <div class="nk-content-inner">
+                                <div class="nk-content-body">
+                                    <div class="nk-block">
+                                        <div class="card">
+                                            <form action="" modelAttribute="acc">
+                                                <div class="card-aside-wrap">
+                                                    <div class="card-inner card-inner-lg">
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="personal">
+                                                                <div class="nk-block-head nk-block-head-lg">
+                                                                    <div class="nk-block-between">
+                                                                        <div class="user-avatar">
+                                                                            <img th:src="@{|/assets/images/client/${acc.photo}|}" alt="">
+                                                                        </div>
+                                                                        <div class="user-info">
+                                                                            <span class="lead-text" th:text="${acc.Fullname}"></span>
+                                                                            <span class="sub-text" th:text="${acc.email}"></span>
+                                                                        </div>
+                                                                        <div class="user-action">
+                                                                            <div class="dropdown">
+                                                                                <a class="btn btn-icon btn-trigger mr-n2" data-toggle="dropdown" href="#"><em class="icon ni ni-more-v"></em></a>
+                                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                                    <ul class="link-list-opt no-bdr">
+                                                                                        <li><a href="" data-toggle="modal"
+                                                                                            data-target="#pass-update"><em class="icon ni ni-shield"></em><span>Thay đổi mật khẩu</span></a></li>
+                                                                                        <li><a href="" data-toggle="modal"
+                                                                                            data-target="#photo-update"><em class="icon ni ni-camera-fill"></em><span>Cập nhật ảnh</span></a></li>
+                                                                                        <li><a href="" data-toggle="modal"
+                                                                                            data-target="#profile-edit"><em class="icon ni ni-edit-fill"></em><span>Cập nhật thông tin</span></a></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <i style="float: right; margin: 10px;" class="text-danger" th:text="${message}"></i>
+                                                                </div><!-- .nk-block-head -->
+                                                                <div class="nk-block">
+                                                                    <div class="nk-data data-list">
+                                                                        <div class="data-head">
+                                                                            <h6 class="overline-title">Thông tin cơ bản</h6>
+                                                                        </div>
+                                                                        <div class="data-item" data-toggle="modal"
+                                                                            data-target="#profile-edit">
+                                                                            <div class="data-col">
+                                                                                <span class="data-label">Họ tên đầy đủ</span>
+                                                                                <span class="data-value" th:text="${acc.fullname}"></span>
+                                                                            </div>
+                                                                            <div class="data-col data-col-end"><span
+                                                                                    class="data-more"><em
+                                                                                        class="icon ni ni-forward-ios"></em></span>
+                                                                            </div>
+                                                                        </div><!-- data-item -->
+                                                                        <div class="data-item">
+                                                                            <div class="data-col">
+                                                                                <span class="data-label">Tên hiển thị</span>
+                                                                                <span
+                                                                                    class="data-value" th:text="${acc.username}"></span>
+                                                                            </div>
+                                                                            <div class="data-col data-col-end"><span
+                                                                                    class="data-more disable"><em
+                                                                                        class="icon ni ni-lock-alt"></em></span>
+                                                                            </div>
+                                                                        </div><!-- data-item -->
+                                                                        <div class="data-item">
+                                                                            <div class="data-col">
+                                                                                <span class="data-label">Email</span>
+                                                                                <span
+                                                                                    class="data-value" th:text="${acc.email}"></span>
+                                                                            </div>
+                                                                            <div class="data-col data-col-end"><span
+                                                                                    class="data-more disable"><em
+                                                                                        class="icon ni ni-lock-alt"></em></span>
+                                                                            </div>
+                                                                        </div><!-- data-item -->
+                                                                        <div class="data-item" data-toggle="modal"
+                                                                            data-target="#profile-edit">
+                                                                            <div class="data-col">
+                                                                                <span class="data-label">Số điện thoại</span>
+                                                                                <span th:if="${acc.phone==null}" class="data-value text-soft">Chưa thêm</span>
+                                                                                <span class="data-value" th:text="${acc.phone}"></span>
+                                                                            </div>
+                                                                            <div class="data-col data-col-end"><span
+                                                                                    class="data-more"><em
+                                                                                        class="icon ni ni-forward-ios"></em></span>
+                                                                            </div>
+                                                                        </div><!-- data-item -->
+                                                                        <div class="data-item">
+                                                                            <div class="data-col">
+                                                                                <span class="data-label">Trạng thái</span>
+                                                                                <span th:if="${acc.active==true}" class="data-value">Đã kích hoạt</span>
+                                                                                <span th:if="${acc.active==false}" class="data-value">Chưa kích hoạt</span>
+                                                                            </div>
+                                                                            <div class="data-col data-col-end"><span
+                                                                                    class="data-more disable"><em
+                                                                                        class="icon ni ni-lock-alt"></em></span>
+                                                                            </div>
+                                                                        </div><!-- data-item -->
+                                                                    </div><!-- data-list -->
+                                                                </div><!-- .nk-block -->
+                                                            </div><!-- .tab-pane -->
+                                                        </div><!-- .tab-content -->
+                                                    </div>
+                                                </div><!-- .card-aside-wrap -->
+                                            </form>
+                                        </div><!-- .card -->
+                                    </div><!-- .nk-block -->
+                                </div>
+                            </div>
+                            <div class="modal fade" tabindex="-1" role="dialog" id="profile-edit">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <a href="#" class="close" data-dismiss="modal"><em
+                                                class="icon ni ni-cross-sm"></em></a>
+                                        <div class="modal-body modal-body-lg">
+                                            <h5 class="title">Cập nhật thông tin</h5>
+                                            <div class="tab-content">
+                                                <form th:action="@{/admin/infonew}" method="post" modelAttribute="acc" enctype="multipart/form-data">
+                                                    <div class="row gy-4">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="full-name">Họ và tên *</label>
+                                                                <input type="text" name="Fullname" th:value="${acc.Fullname}" class="form-control form-control-lg">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="phone-no">Số điện thoại *</label>
+                                                                <input type="text" name="Phone" th:value="${acc.Phone}" class="form-control form-control-lg">
+                                                                <input type="hidden" name="Photo" th:value="${acc.Photo}">
+                                                                <input type="hidden" name="Password" th:value="${acc.Password}">
+                                                                <input type="hidden" name="username" th:value="${#request.remoteUser}">
+                                                                <input type="hidden" name="active" th:value="${acc.active}">
+                                                                <input type="hidden" name="Email" th:value="${acc.Email}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                <li>
+                                                                    <button type="submit" class="btn btn-lg btn-primary">Cập nhật</button>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" data-dismiss="modal"
+                                                                        class="link link-light">Huỷ</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div><!-- .tab-content -->
+                                        </div><!-- .modal-body -->
+                                    </div><!-- .modal-content -->
+                                </div><!-- .modal-dialog -->
+                            </div><!-- .modal -->
+
+                            <div class="modal fade" tabindex="-1" role="dialog" id="photo-update">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <a href="#" class="close" data-dismiss="modal"><em
+                                                class="icon ni ni-cross-sm"></em></a>
+                                        <div class="modal-body modal-body-lg">
+                                            <h5 class="title">Cập nhật hình đại diện</h5>
+                                            <div class="tab-content">
+                                                <form th:action="@{/admin/uploadPhoto}" method="post" modelAttribute="acc" enctype="multipart/form-data">
+                                                    <div class="row gy-4">
+                                                        <div class="col-md-12 mb-3">
+                                                            <label class="form-label" for="full-name">Tải ảnh lên *</label>
+                                                            <div class="form-group">
+                                                                <input type="hidden" name="idUsernameInfo" th:value="${#request.remoteUser}">
+                                                                <div class="form-control-wrap form-control-sm">
+                                                                    <div class="custom-file">
+                                                                        <input type="file" multiple="" name="photo_img" class="custom-file-input" id="customFile">
+                                                                        <label class="custom-file-label" for="customFile">Chọn file</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                <li>
+                                                                    <button type="submit" class="btn btn-lg btn-primary">Cập nhật</button>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" data-dismiss="modal"
+                                                                        class="link link-light">Huỷ</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div><!-- .tab-content -->
+                                        </div><!-- .modal-body -->
+                                    </div><!-- .modal-content -->
+                                </div><!-- .modal-dialog -->
+                            </div><!-- .modal -->
+
+                            <div class="modal fade" tabindex="-1" role="dialog" id="pass-update">
+                                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                                    <div class="modal-content">
+                                        <a href="#" class="close" data-dismiss="modal"><em
+                                                class="icon ni ni-cross-sm"></em></a>
+                                        <div class="modal-body modal-body-md">
+                                            <h5 class="title">Cập nhật mật khẩu</h5>
+                                            <div class="tab-content">
+                                                <form th:action="@{/admin/changePW}" modelAttribute="acc" method="post">
+                                                    <div class="row gy-4">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="full-name">Mật khẩu hiện tại *</label>
+                                                                <input type="password" name="confim" class="form-control form-control-lg" required>
+                                                                <input type="hidden" name="username" th:value="${#request.remoteUser}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="full-name">Mật khẩu mới *</label>
+                                                                <input type="password" name="pswnew" class="form-control form-control-lg" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="full-name">Nhập lại mật khẩu mới *</label>
+                                                                <input type="password" name="confim-pswnew" class="form-control form-control-lg" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                <li>
+                                                                    <button type="submit" class="btn btn-lg btn-primary">Đổi mật khẩu</button>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="#" data-dismiss="modal"
+                                                                        class="link link-light">Huỷ</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div><!-- .tab-content -->
+                                        </div><!-- .modal-body -->
+                                    </div><!-- .modal-content -->
+                                </div><!-- .modal-dialog -->
+                            </div><!-- .modal -->
+                        </main>
+                    </div>
+                </div>
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+</body>
+
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/layout/index :: dynamic(~{::main})}">
+
+<body>
+    <div class="page-wrapper">
+
+        <main class="main">
+            <div class="page-header text-center" style="background-image: url('/assets/images/page-header-bg.jpg')">
+                <div class="container">
+                    <h1 class="page-title">Thanh toán<span>Shop</span></h1>
+                </div>
+            </div>
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home/index}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/product/list}">Cửa hàng</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
+                    </ol>
+                </div>
+            </nav>
+
+            <div class="page-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div th:replace="~{user/cart/cart_page :: shopping_cart}"></div>
+                            <div class="row">
+                                <a th:href="@{/order/checkout}" class="btn btn-outline-dark-2"><span>Cập nhật giỏ
+                                        hàng</span><i class="icon-refresh"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="summary summary-cart">
+                                <h3 class="summary-title">Tổng số giỏ hàng</h3>
+                                <table class="table table-summary">
+                                    <tbody>
+                                        <tr class="summary-subtotal">
+                                            <td>Tổng:</td>
+                                            <td>{{cart.amount1 | number:0}} Đ</td>
+                                        </tr>
+                                        <tr class="summary-subtotal">
+                                            <td>Khuyến mãi:</td>
+                                            <td>{{cart.amount2 | number:0}} Đ</td>
+                                        </tr>
+
+                                        <tr class="summary-total">
+                                            <td>Phải thanh toán:</td>
+                                            <td>{{cart.amount | number:0}} Đ</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="card card-body">
+					<form method="post" action="/pay">
+                        <h2 class="checkout-title">Chi tiết thanh toán - Thanh toán khi nhận hàng</h2>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Người mua</label>
+                                <div class="form-control" id="username" readonly>[[${#request.remoteUser}]]</div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label>Ngày đặt hàng</label>
+                                <div class="form-control" readonly>{{order.createDate | date : 'dd-MM-yyyy HH:mm'}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div hidden="true" class="form-group col-sm-6">
+                            <div class="thongtin">Tổng tiền ($)</div>
+                            <input class="form-control" readonly style="border-radius: 20px; font-size: 15px; border: 1px solid #ccc;"
+                                type="text" id="price" name="price" ng-model="order.price /23000 ">
+                        </div>
+                        <div hidden="true">
+                            <input class="form-control" type="text" id="currency"
+                                name="currency" placeholder="Enter Currency"
+                                ng-model="order.currency"> <input class="form-control"
+                                type="text" id="method" name="method"
+                                placeholder="Payment Method" ng-model="order.method"> <input
+                                class="form-control" type="text" id="intent" name="intent"
+                                placeholder="sale" ng-model="order.intent"> <input
+                                class="form-control" type="text" id="description"
+                                name="description" placeholder="Payment Description"
+                                ng-model="order.description">
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Số điện thoại *</label>
+                                <input id="phone_thanhtoansau" ng-model="order.phone" class="form-control">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label>Tổng tiền (Đã chuyển từ VNĐ sang USD)</label>
+								<input class="form-control" readonly 
+									type="text"  ng-model="order.price /23000 | currency : $ : 2 ">
+                            </div>
+                        </div>
+
+                        <label>Địa chỉ giao hàng *</label>
+                        <textarea id="diachi_thanhtoansau" class="form-control" cols="30" rows="4"
+                            ng-model="order.address"></textarea>
+
+                        <div class="w-25 mx-auto">
+                            <button type="submit" ng-click="order.purchase1()"
+                                class="btn btn-outline-primary-2 btn-order btn-block">
+                                <span class="btn-text">Đặt hàng</span>
+                                <span class="btn-hover-text">Tiến hành kiểm tra</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{user/layout/index :: dynamic(~{::main})}" lang="en" dir="ltr">
+
+<body>
+    <div class="page-wrapper">
+        <main class="main">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/home/index}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{/product/list}">Cửa hàng</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Thông tin</li>
+                    </ol>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="page-header page-header-big text-center" style="background-image: url('/assets/images/backgrounds/about-header-bg.jpg')">
+                    <h1 class="page-title text-white">Thông tin <span class="text-white">về cửa hàng</span></h1>
+                </div>
+            </div>
+
+            <div class="page-content pb-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 mb-3 mb-lg-0">
+                            <h2 class="title">Tầm nhìn</h2>
+                            <p>Chúng tôi luôn luôn phát triển những nhu cầu phù hợp với khách hàng và luôn cải tiến những sản phẩm của mình để vươn đến 1 tầm sao mới. </p>
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="title">Nhiệm vụ</h2>
+                            <p>Luôn luôn lắng nghe và thấu hiểu ý kiến và góp ý của khách hàng để phục vụ khách hàng 1 cách tốt nhất </p>
+                        </div>
+                    </div>
+                    <div class="mb-5"></div>
+                </div>
+                <div class="bg-light-2 pt-6 pb-5 mb-6 mb-lg-8">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-5 mb-3 mb-lg-0">
+                                <h2 class="title">Chúng tôi là ai</h2>
+                                <p class="lead text-primary mb-3"> Luôn cung cấp sản phẩm tốt nhất đến khách hàng<br> hãy đến với cửa hàng cửa chúng tôi</p>
+                                <p class="mb-2"></p>
+
+                                <a th:href="@{/post/list}" class="btn btn-sm btn-minwidth btn-outline-primary-2">
+                                    <span>Xem tin tức của chúng tôi</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                </a>
+                            </div>
+
+                            <div class="col-lg-6 offset-lg-1">
+                                <div class="about-images">
+                                    <img src="/assets/images/banners/i31.jpg" alt="" class="about-img-front">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-2"></div>
+
+                <div class="about-testimonials bg-light-2 pt-6 pb-6">
+                    <div class="container">
+                        <h2 class="title text-center mb-3">Khách hàng nói gì về chúng tôi</h2>
+
+                        <div class="owl-carousel owl-simple owl-testimonials-photo" data-toggle="owl" data-owl-options='{
+                                "nav": false, 
+                                "dots": true,
+                                "margin": 20,
+                                "loop": false,
+                                "responsive": {
+                                    "1200": {
+                                        "nav": true
+                                    }
+                                }
+                            }'>
+                            <blockquote class="testimonial text-center">
+                                <img src="/assets/images/testimonials/user-1.jpg" alt="user">
+                                <p>“ Tôi đã sử dụng và trải nghiệm sản phẩm của cửa hàng và tôi cảm thấy hài lòng <br>Thái độ phụ vụ rất nhiệt tình và chu đáo Tôi sẽ mua thêm và sử dụng sản phẩm ”</p>
+                                <cite>
+                                    Nguyễn văn A
+                                    <span>Khách hàng</span>
+                                </cite>
+                            </blockquote>
+
+                            <blockquote class="testimonial text-center">
+                                <img src="/assets/images/testimonials/user-2.jpg" alt="user">
+                                <p>“ Tôi đã sử dụng và trải nghiệm sản phẩm của cửa hàng và tôi cảm thấy hài lòng <br>Thái độ phụ vụ rất nhiệt tình và chu đáo Tôi sẽ mua thêm và sử dụng sản phẩm ”</p>
+
+                                <cite>
+                                   Nguyễn văn B
+                                    <span>Khách hàng</span>
+                                </cite>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<div class="reviews">
+
+    <div class="row mx-auto" style="width: 90%;">
+        <div class="col-sm-12">
+            <div class="review" th:each="v:${votes}">
+                <div class="row no-gutters">
+                    <div class="col-auto">
+                        <div>
+                            <figure class="product-media">
+                                <a href="#">
+                                    <img th:if="${v.Image}!=null" alt="" th:src="@{|/assets/images/comments/${v.Image}|}"
+                                        style="width: 100px; height: 100px;">
+                                </a>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <strong>
+                            <h4 th:text="${v.account.fullname}"></h4>
+                        </strong>
+
+
+                        <div th:if="${v.Vote}==1">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 20%;"></div>
+                            </div>
+                        </div>
+                        <div th:if="${v.Vote}==2">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 40%;"></div>
+                            </div>
+                        </div>
+                        <div th:if="${v.Vote}==3">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                        <div th:if="${v.Vote}==4">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                        <div th:if="${v.Vote}==5">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 100%;"></div>
+                            </div>
+                        </div> 
+                        
+                        <span class="review-date"><label><i>[[${#dates.format(v.Vote_Date, 'yyyy-MM-dd
+                            HH:mm')}]]</i></label></span>
+                        <div class="review-content">
+                            <p> [[${v.Vote_Content}]] </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(main)">
+
+<head>
+    <base href="../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+        content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="/assets/images/icons/favicon.ico">
+    <!-- Page Title  -->
+    <title>Store | DashLite Admin</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="/admin/assets/css/dashlite.css?ver=2.2.0">
+    <link id="skin-default" rel="stylesheet" href="/admin/assets/css/theme.css?ver=2.2.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="/ckeditor/ckeditor.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/highcharts.css">
+</head>
+
+<body ng-app="admin-ctrl" class="nk-body bg-lighter npc-general has-sidebar">
+    <div class="nk-app-root">
+        <div class="nk-main" id="container">
+            <div th:replace="/admin/layout/_aside.html"></div>
+            <div class="nk-wrap">
+                <div class="nk-header nk-header-fixed is-light">
+                    <div class="container-fluid">
+                        <div th:replace="/admin/layout/_header.html"></div>
+                    </div>
+                </div>
+                <div class="nk-content" id="main-content">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-lg wide-sm">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="nk-block-title page-title">Thống kê theo thương hiệu</h3>
+                                        <div class="nk-block-des">
+                                            <p class="lead">Thống kê doanh thu bán được theo thương hiệu.</p>
+                                            <i class="text-center text-danger" th:text="${message}"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nk-block nk-block-lg">
+                                    <div class="card card-preview">
+                                        <div class="card-inner">
+                                            <table class="table  table-advance table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th> Thương hiệu</th>
+                                                        <th> Tổng tiền </th>
+                                                        <th> Tổng số sản phẩm </th>
+                                                        <th> Giá mua nhỏ nhất</th>
+                                                        <th> Giá mua lớn nhất</th>
+                                                        <th>Giá trung bình</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="r:${items}">
+                                                        <td>
+                                                            &ensp;&ensp;[[${r.group}]]
+                                                        </td>
+                                                        <td> [[${#numbers.formatDecimal(r.sum, 0, 'COMMA', 0,
+                                                            'POINT')}]] Đ</td>
+                                                        <td>[[${r.count}]]</td>
+                                                        <td>[[${#numbers.formatDecimal(r.min, 0, 'COMMA', 0, 'POINT')}]]
+                                                            Đ</td>
+                                                        <td>[[${#numbers.formatDecimal(r.max, 0, 'COMMA', 0, 'POINT')}]]
+                                                            Đ</td>
+                                                        <td>[[${#numbers.formatDecimal(r.avg, 0, 'COMMA', 0, 'POINT')}
+                                                            ]] Đ</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                            <div class="mt-2" id="char2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="/admin/layout/_footer.html"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/admin/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/admin/js/admin.js"></script>
+    <script src="/admin/assets/js/bundle.js?ver=2.2.0"></script>
+    <script src="/admin/assets/js/scripts.js?ver=2.2.0"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <script>
+        $.ajax({
+            url: "/rest/chartrak",
+            success: function (result) {
+                var seri = [];
+
+                var data = [];
+
+                var datacolumn1 = [];
+                var datacolumn2 = [];
+                var name_product = [];
+                console.log(result);
+                for (var i = 0; i < result.length; i++) {
+                    var name = {};
+                    name = result[i].group;
+
+                    name_product.push(name);
+                }
+                for (var i = 0; i < result.length; i++) {
+                    var colum = {};
+                    colum = result[i].sum;
+                    datacolumn1.push(colum);
+                }
+                for (var i = 0; i < result.length; i++) {
+                    var colum = {};
+                    colum = result[i].count;
+                    datacolumn2.push(colum);
+                }
+
+                for (var i = 0; i < result.length; i++) {
+                    var object = {};
+                    object.name = result[i].group;
+                    object.y = result[i].sum;
+                    data.push(object);
+                }
+
+                var seriObject = {
+                    name: 'Danh thu',
+                    colorByPoint: true,
+                    data: data,
+                    showInLegend: true
+                }
+
+                seri.push(seriObject);
+                drawColumnChart(datacolumn1, datacolumn2, name_product);
+
+
+            }
+        });
+
+        function drawColumnChart(datacolumn1, datacolumn2, name_product) {
+            Highcharts.chart('char2', {
+
+                chart: {
+                    type: 'column',
+                    styledMode: true
+                },
+
+                title: {
+                    text: 'Thống kê Doanh thu theo thương hiệu  '
+                },
+                xAxis: {
+                    categories: name_product,
+                    title: {
+                        text: ' Thương hiệu '
+                    }
+                },
+                yAxis: [{
+                    className: 'highcharts-color-0',
+                    title: {
+                        text: 'Danh thu (Đ)'
+                    }
+                }, {
+                    className: 'highcharts-color-1',
+                    opposite: true,
+                    title: {
+                        text: 'Số lượng   '
+                    }
+                }],
+
+                plotOptions: {
+                    column: {
+                        borderRadius: 5
+                    }
+                },
+
+                series: [{
+                    name: 'Doanh thu (Đ)',
+                    data: datacolumn1
+                }, {
+                    name: 'số lượng',
+                    data: datacolumn2,
+                    yAxis: 1
+                }]
+
+            });
+        }
+    </script>
+</body>
